@@ -1,0 +1,26 @@
+<% content_for :title, "Contact & Booking" %>
+<% content_for :meta_description, "Book an appointment with Dr. Mohammed Ali Balhareth at Al Hamra Hospital (Dr. Sulaiman Al Habib Medical Group), Riyadh. Phone & WhatsApp: +966 58 377 7871." %>
+
+<div>
+  <div class="m1 sec-pad" style="padding:80px 48px 88px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;background:radial-gradient(110% 85% at 12% 100%,#E4F0F9 0%,rgba(228,240,249,0) 58%),linear-gradient(0deg,#FDFEFF 0%,#F7FAFC 100%)">
+    <div style="display:flex;flex-direction:column;gap:26px">
+      <div style="display:flex;align-items:center;gap:12px;animation:fadeUp .7s .1s ease both"><svg width="64" height="22" viewBox="0 0 64 22" style="overflow:visible;flex:none"><path d="M0 11 H14 L19 3 L25 19 L30 11 H64" fill="none" stroke="#1273BF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="110" stroke-dashoffset="110" style="animation:ecg 2.8s linear infinite"></path></svg><span style="font-size:12px;letter-spacing:.24em;color:#1273BF">CONTACT &amp; BOOKING</span></div>
+      <h1 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(34px,4.5vw,58px);line-height:1;text-transform:uppercase;animation:fadeUp .7s .25s ease both">Start your<br>recovery <span style="color:#1273BF">today</span></h1>
+      <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(22,40,58,.65);animation:fadeUp .7s .4s ease both">Request an appointment, and our clinic team will confirm your visit within one working day. Prefer to chat? Message us on WhatsApp to get an answer during clinic operating hours.</p>
+      <div class="m1" style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(22,40,58,.1);border:1px solid rgba(22,40,58,.1);border-radius:18px;overflow:hidden;box-shadow:0 2px 10px rgba(22,40,58,.04);animation:fadeUp .7s .5s ease both">
+        <div style="background:#F7FAFC;padding:22px 24px"><div style="font-size:12px;letter-spacing:.16em;color:#1273BF;margin-bottom:8px">LOCATION</div><div style="font-size:14.5px;line-height:1.5">Riyadh, Saudi Arabia<br>Dr. Sulaiman Al Habib Medical Group — Al Hamra Hospital</div></div>
+        <div style="background:#F7FAFC;padding:22px 24px"><div style="font-size:12px;letter-spacing:.16em;color:#1273BF;margin-bottom:8px">PHONE</div><div style="font-size:14.5px;line-height:1.5"><a href="<%= ApplicationHelper::CLINIC_PHONE_TEL %>" class="link-blue"><%= ApplicationHelper::CLINIC_PHONE_DISPLAY %></a></div></div>
+        <div style="background:#F7FAFC;padding:22px 24px"><div style="font-size:12px;letter-spacing:.16em;color:#1273BF;margin-bottom:8px">HOURS</div><div style="font-size:14.5px;line-height:1.5">Sat · 9:00 AM–12:00 PM<br>Sun, Tue, Wed · 4:00–8:00 PM</div></div>
+        <div style="background:#F7FAFC;padding:22px 24px"><div style="font-size:12px;letter-spacing:.16em;color:#1273BF;margin-bottom:8px">EMAIL</div><div style="font-size:14.5px;line-height:1.5"><a href="mailto:<%= ApplicationHelper::CLINIC_EMAIL %>" class="link-blue"><%= ApplicationHelper::CLINIC_EMAIL %></a></div></div>
+      </div>
+      <a href="<%= ApplicationHelper::CLINIC_WHATSAPP_URL %>" target="_blank" rel="noopener" class="lift-2" style="align-self:flex-start;display:flex;align-items:center;gap:12px;background:#25D366;color:#0B1A12;border-radius:999px;padding:15px 30px;font-size:14px;font-weight:700;letter-spacing:.06em;animation:pulseRing 2.4s infinite;transition:transform .3s">WHATSAPP THE CLINIC ↗</a>
+      <div style="border:1px solid rgba(22,40,58,.12);border-radius:18px;height:320px;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(22,40,58,.08)">
+        <iframe src="<%= ApplicationHelper::CLINIC_MAP_EMBED %>" title="Clinic location map" style="width:100%;height:100%;border:none;display:block" loading="lazy"></iframe>
+        <a href="<%= ApplicationHelper::CLINIC_MAP_LINK %>" target="_blank" rel="noopener" style="position:absolute;right:10px;bottom:10px;background:rgba(255,255,255,.95);border:1px solid rgba(22,40,58,.15);padding:8px 14px;font-size:11px;letter-spacing:.12em;color:#1273BF">OPEN IN MAPS ↗</a>
+      </div>
+    </div>
+    <div style="animation:fadeUp .7s .35s ease both">
+      <%= render "shared/booking_form" %>
+    </div>
+  </div>
+</div>

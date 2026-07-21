@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= page_title %></title>
+  <% if content_for?(:meta_description) %><meta name="description" content="<%= content_for(:meta_description) %>"><% end %>
+  <%= csrf_meta_tags %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+  <script src="/site.js" defer></script>
+</head>
+<body>
+<div style="background:#F7FAFC;color:#16283A;font-family:'Figtree',sans-serif;min-height:100vh">
+
+  <%= yield :splash %>
+
+  <%= render "shared/nav" %>
+
+  <%= yield %>
+
+  <%= render "shared/whatsapp_float" %>
+  <%= render "shared/footer" %>
+</div>
+</body>
+</html>

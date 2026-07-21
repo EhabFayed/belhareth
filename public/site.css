@@ -1,0 +1,79 @@
+/* Balhareth Ortho — ported from the Claude Design export (Medical theme). */
+*{box-sizing:border-box}
+body{margin:0;background:#F7FAFC;font-family:'Figtree',sans-serif;color:#16283A}
+a{color:inherit;text-decoration:none;cursor:pointer}
+img.slot{display:block;width:100%;height:100%;object-fit:cover}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.3,1),transform .8s cubic-bezier(.2,.7,.3,1)}
+.rv.rv-on{opacity:1;transform:none}
+.rv-kids>*{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.rv-kids.rv-on>*{opacity:1;transform:none}
+
+@keyframes ecg{0%{stroke-dashoffset:110}55%{stroke-dashoffset:0}100%{stroke-dashoffset:-110}}
+@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.07)}}
+@keyframes waveIn{from{opacity:0;transform:translateY(14px) scale(.92)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(37,211,102,.45)}70%{box-shadow:0 0 0 16px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+@keyframes growX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes splashBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes splashUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* nav */
+.nav-link{position:relative;cursor:pointer;padding:6px 0;transition:color .3s}
+.nav-link::after{content:'';position:absolute;left:0;right:100%;bottom:0;height:2px;background:#1273BF;transition:right .32s cubic-bezier(.2,.7,.3,1)}
+.nav-link:hover{color:#1273BF}
+.nav-link:hover::after{right:0}
+.nav-link.nav-on{color:#1273BF;font-weight:700}
+.nav-link.nav-on::after{right:0}
+
+/* hero */
+.hero-photo{overflow:hidden;border-radius:18px}
+.hero-photo img{animation:kenburns 14s ease-in-out infinite alternate}
+.hw{transition:opacity .32s ease,transform .32s ease}
+.hw.out{opacity:0;transform:translateY(12px)}
+
+/* splash (home first landing) */
+.splash{position:fixed;inset:0;z-index:100;background:#0F2436;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;transition:opacity .7s ease,visibility .7s}
+.splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+
+/* FAQ accordions */
+details.faq-d>div{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.2,.7,.3,1),padding .3s}
+details.faq-d[open]>div{max-height:400px}
+details.faq-d summary::-webkit-details-marker{display:none}
+details.faq-d summary span.pl{transition:transform .35s cubic-bezier(.2,.7,.3,1)}
+details.faq-d[open] summary span.pl{transform:rotate(45deg)}
+details.faq-d:hover{border-color:rgba(18,115,191,.4)!important;box-shadow:0 6px 18px rgba(18,115,191,.08)}
+
+/* hover utilities (design's style-hover attributes) */
+.btn-blue:hover{background:#0C5A99!important}
+.btn-hero:hover{transform:translateY(-3px);background:#0C5A99!important;box-shadow:0 14px 30px rgba(18,115,191,.35)}
+.btn-wa-outline:hover{background:#25D366!important;color:#0B1A12!important}
+.card-spec:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 26px 52px rgba(18,115,191,.24)!important}
+.card-line:hover{border-color:#1273BF!important;transform:translateY(-4px)}
+.card-pop:hover{transform:translateY(-5px);box-shadow:0 18px 38px rgba(18,115,191,.14)!important}
+.cell-tint:hover{background:#EDF4FA!important}
+.link-blue:hover{color:#1273BF!important}
+.chip-blue:hover{border-color:#1273BF!important;color:#1273BF!important}
+.lift-2:hover{transform:translateY(-2px)}
+.lift-4:hover{transform:translateY(-4px)}
+.wa-float:hover{transform:scale(1.08)}
+.flink:hover{color:#6FB4E4!important}
+.inp{border:1px solid rgba(22,40,58,.18);border-radius:12px;background:transparent;color:#16283A;padding:15px 16px;font-size:13px;letter-spacing:.08em;font-family:'Figtree',sans-serif;outline:none;width:100%}
+.inp:focus{border-color:#1273BF}
+
+/* responsive: tagged grids collapse on smaller screens */
+@media (max-width:1080px){
+  .m2{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media (max-width:900px){
+  .m1{grid-template-columns:1fr!important}
+  .sec-pad{padding-left:24px!important;padding-right:24px!important}
+  #site-nav{padding:12px 18px!important;flex-wrap:wrap}
+}
+@media (max-width:640px){
+  .m2{grid-template-columns:1fr!important}
+}

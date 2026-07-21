@@ -1,0 +1,91 @@
+<% content_for :title, "About the Doctor" %>
+<% content_for :meta_description, "Dr. Mohammed Ali Balhareth — Canadian-fellowship-trained consultant orthopedic surgeon in Riyadh: hip & knee replacement, reconstruction, and trauma & fracture surgery." %>
+
+<div>
+  <div class="m1 sec-pad" style="padding:80px 48px 72px;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:64px;align-items:center;background:radial-gradient(110% 85% at 88% 0%,#E4F0F9 0%,rgba(228,240,249,0) 58%),linear-gradient(180deg,#FDFEFF 0%,#F7FAFC 100%)">
+    <div style="position:relative;animation:fadeIn 1s .2s ease both">
+      <div style="width:100%;height:540px"><img class="slot" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=900&q=80" alt="Portrait of Dr. Balhareth (placeholder — awaiting doctor's photo)" style="border-radius:18px"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:26px">
+      <div style="display:flex;align-items:center;gap:12px;animation:fadeUp .7s .1s ease both"><svg width="64" height="22" viewBox="0 0 64 22" style="overflow:visible;flex:none"><path d="M0 11 H14 L19 3 L25 19 L30 11 H64" fill="none" stroke="#1273BF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="110" stroke-dashoffset="110" style="animation:ecg 2.8s linear infinite"></path></svg><span style="font-size:12px;letter-spacing:.24em;color:#1273BF">ABOUT THE DOCTOR</span></div>
+      <h1 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(34px,4.4vw,56px);line-height:1;text-transform:uppercase;animation:fadeUp .7s .25s ease both">Dr. Mohammed<br>Ali <span style="color:#1273BF">Balhareth</span></h1>
+      <p style="margin:0;font-size:16px;letter-spacing:.06em;color:rgba(22,40,58,.6);animation:fadeUp .7s .35s ease both">CONSULTANT — HIP &amp; KNEE REPLACEMENT · RECONSTRUCTION · TRAUMA &amp; FRACTURE SURGERY</p>
+      <p style="margin:0;font-size:16.5px;line-height:1.75;color:rgba(22,40,58,.7);animation:fadeUp .7s .45s ease both">A Canadian-fellowship-trained consultant orthopedic surgeon whose practice is built on a single, patient-centered mission: precise diagnosis, honest clinical guidance, and surgical intervention only when it is truly the best path for your recovery. Dr. Balhareth specializes in managing degenerative joint disease of the hip and knee, complex post-traumatic fractures, and specialized conditions such as developmental dysplasia (DDH), avascular necrosis, and sickle-cell disease of the hip.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;animation:fadeUp .7s .55s ease both">
+        <a href="<%= contact_path %>" class="btn-blue" style="padding:16px 32px;border-radius:999px;background:#1273BF;color:#fff;font-size:14px;font-weight:700;letter-spacing:.06em;transition:background .3s">BOOK A CONSULTATION</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="rv m1 sec-pad" style="border-top:1px solid rgba(22,40,58,.12);padding:88px 48px;display:grid;grid-template-columns:minmax(0,.4fr) minmax(0,.6fr);gap:56px">
+    <div>
+      <div style="font-size:12px;letter-spacing:.24em;color:#1273BF;margin-bottom:18px">01 / CREDENTIALS</div>
+      <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:40px;line-height:1.05;text-transform:uppercase">Training<br>&amp; career</h2>
+    </div>
+    <div style="display:flex;flex-direction:column">
+      <% [
+        ["MBBS",   "Doctor of Medicine",                                   "Medical degree with honors, followed by orthopedic surgery residency."],
+        ["BOARD",  "Saudi & International Board Certification",            "Certified in orthopedic surgery by Saudi and international boards."],
+        ["FELLOW", "Fellowship — Adult Hip & Knee Reconstruction",         "Subspecialty training in primary and revision joint replacement."],
+        ["NOW",    "Consultant — Hip & Knee Replacement and Trauma",       "Active surgical practice, research, and medical education in Riyadh."]
+      ].each_with_index do |(tag, title, body), i| %>
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding:26px 8px;border-top:1px solid rgba(22,40,58,.12);<%= 'border-bottom:1px solid rgba(22,40,58,.12);' if i == 3 %>"><span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:18px;color:#1273BF"><%= tag %></span><div><div style="font-weight:700;font-size:16px;margin-bottom:6px"><%= title %></div><div style="font-size:14px;line-height:1.6;color:rgba(22,40,58,.6)"><%= body %></div></div></div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- philosophy: how I decide -->
+  <div class="rv m1 sec-pad" style="padding:0 48px 88px;display:grid;grid-template-columns:minmax(0,.4fr) minmax(0,.6fr);gap:56px">
+    <div>
+      <div style="font-size:12px;letter-spacing:.24em;color:#1273BF;margin-bottom:18px">02 / PHILOSOPHY</div>
+      <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(28px,3.2vw,40px);line-height:1.05;text-transform:uppercase">How I decide<br>with you</h2>
+      <p style="margin:22px 0 0;font-size:14.5px;line-height:1.7;color:rgba(22,40,58,.6)">Every recommendation follows the same three questions — in this order.</p>
+    </div>
+    <div class="rv-kids" style="display:flex;flex-direction:column;gap:16px">
+      <% [
+        ["1", "Can we avoid surgery?",
+              "If conservative options like physiotherapy or injections can effectively address your condition, that will always be my first recommendation."],
+        ["2", "If surgery is needed — what is the least invasive solution?",
+              "I prioritize joint preservation and partial replacements whenever anatomy allows; our goal is to achieve the best result with the simplest procedure possible."],
+        ["3", "What does recovery look like for your life?",
+              "My plans are built around you — your work, your prayers, and your daily movement — with clear, measurable milestones for your full return to life."]
+      ].each do |n, q, a| %>
+      <div style="border:1px solid rgba(22,40,58,.1);border-radius:18px;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);padding:28px 32px;display:grid;grid-template-columns:56px 1fr;gap:22px;align-items:center"><span style="width:56px;height:56px;border-radius:16px;background:#E4F0F9;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:20px;color:#1273BF"><%= n %></span><div><div style="font-weight:700;font-size:17px;margin-bottom:6px"><%= q %></div><div style="font-size:14.5px;line-height:1.65;color:rgba(22,40,58,.65)"><%= a %></div></div></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="sec-pad" style="padding:0 48px 88px">
+    <div style="border:1px solid rgba(18,115,191,.3);border-radius:22px;box-shadow:0 10px 34px rgba(22,40,58,.07);background:#FFFFFF;padding:56px 60px;display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center">
+      <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:80px;color:#1273BF;line-height:1">“</span>
+      <div>
+        <p style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:26px;line-height:1.4">My job is not to operate. My job is to get you moving — and to be honest about the shortest safe road there.</p>
+        <div style="margin-top:16px;font-size:13px;letter-spacing:.16em;color:rgba(22,40,58,.55)">— DR. MOHAMMED ALI BALHARETH</div>
+      </div>
+    </div>
+  </div>
+
+  <%# 03 / SURGICAL FOCUS (40%/35%/20%/5% cards) removed at the client's request. %>
+
+  <!-- languages & memberships -->
+  <div class="rv m1 sec-pad" style="padding:0 48px 88px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px">
+    <div style="border:1px solid rgba(22,40,58,.1);border-radius:18px;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);padding:32px 36px">
+      <div style="font-size:12px;letter-spacing:.2em;color:#1273BF;margin-bottom:18px">MEMBERSHIPS</div>
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:1.6">
+        <div style="display:flex;gap:12px;align-items:baseline"><span style="color:#1273BF;font-weight:700;flex:none">✚</span>Saudi Orthopedic Association</div>
+        <div style="display:flex;gap:12px;align-items:baseline"><span style="color:#1273BF;font-weight:700;flex:none">✚</span>American Academy of Orthopaedic Surgeons (AAOS) — International</div>
+        <div style="display:flex;gap:12px;align-items:baseline"><span style="color:#1273BF;font-weight:700;flex:none">✚</span>Saudi Commission for Health Specialties (SCFHS)</div>
+      </div>
+    </div>
+    <div style="border:1px solid rgba(22,40,58,.1);border-radius:18px;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);padding:32px 36px">
+      <div style="font-size:12px;letter-spacing:.2em;color:#1273BF;margin-bottom:18px">CONSULTATION LANGUAGES</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <span style="background:#E4F0F9;color:#1273BF;border-radius:999px;padding:10px 22px;font-size:14px;font-weight:700">العربية — Arabic</span>
+        <span style="background:#E4F0F9;color:#1273BF;border-radius:999px;padding:10px 22px;font-size:14px;font-weight:700">English</span>
+      </div>
+      <p style="margin:18px 0 0;font-size:13.5px;line-height:1.6;color:rgba(22,40,58,.6)">Reports and post-operative instructions are provided in both languages.</p>
+    </div>
+  </div>
+
+  <%= render "shared/cta_band", headline_html: raw("Ready to talk<br>about <span style=\"color:#1273BF\">your joint?</span>") %>
+</div>

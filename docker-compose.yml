@@ -20,6 +20,8 @@ services:
   app:
     build: .
     restart: always
+    # Match the host user (uid 1001) so the bind-mounted tmp/ and log/ are writable.
+    user: "1001:1001"
     depends_on:
       - db
       - redis
@@ -28,8 +30,8 @@ services:
       REDIS_URL: redis://redis:6379/0
       RAILS_ENV: development
     volumes:
-      - .:/app
-      - storage:/app/storage
+      - .:/rails
+      - storage:/rails/storage
     ports:
       - "3000:3000"
     command: ["bin/rails", "server", "-b", "0.0.0.0"]
@@ -37,6 +39,7 @@ services:
   sidekiq:
     build: .
     restart: always
+    user: "1001:1001"
     depends_on:
       - redis
       - db
@@ -45,7 +48,8 @@ services:
       REDIS_URL: redis://redis:6379/0
       RAILS_ENV: development
     volumes:
-      - storage:/app/storage
+      - .:/rails
+      - storage:/rails/storage
     command: ["bundle", "exec", "sidekiq", "-r", "./config/environment.rb"]
 
 volumes:

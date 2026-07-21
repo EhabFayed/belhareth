@@ -1,0 +1,11 @@
+<div id="site-nav" style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:28px;padding:0 32px;min-height:68px;border-bottom:1px solid rgba(22,40,58,.1);background:rgba(255,255,255,.92);backdrop-filter:blur(10px);transition:box-shadow .4s">
+  <a href="<%= root_path %>" style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:17px;letter-spacing:.04em;white-space:nowrap">DR-BALHARETH<span style="color:#1273BF">.</span>ORTHO</a>
+  <div style="display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:center;font-size:13.5px;letter-spacing:.06em;color:rgba(22,40,58,.7)">
+    <a href="<%= root_path %>" class="<%= nav_link_class(root_path) %>">HOME</a>
+    <a href="<%= about_path %>" class="<%= nav_link_class(about_path) %>">ABOUT</a>
+    <a href="<%= specialties_path %>" class="<%= nav_link_class(specialties_path) %>">SPECIALTIES</a>
+    <a href="<%= faq_path %>" class="<%= nav_link_class(faq_path) %>">FAQ</a>
+    <a href="<%= contact_path %>" class="<%= nav_link_class(contact_path) %>">CONTACT</a>
+  </div>
+  <a href="<%= contact_path %>" class="btn-blue" style="padding:11px 24px;border-radius:999px;background:#1273BF;color:#fff;font-size:13px;font-weight:700;letter-spacing:.08em;white-space:nowrap;transition:background .3s">BOOK APPOINTMENT</a>
+</div>
