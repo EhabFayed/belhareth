@@ -22,13 +22,13 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  config.assume_ssl = true
+  config.assume_ssl = ENV.fetch("RAILS_ASSUME_SSL", "false") == "true"
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = ENV.fetch("RAILS_FORCE_SSL", "false") == "true"
 
   # Skip http-to-https redirect for the default health check endpoint.
-  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } } if config.force_ssl
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
@@ -54,7 +54,11 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  # Change the default once the real domain is final.
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch("RAILS_HOST", "balhareth.com"),
+    protocol: ENV.fetch("RAILS_PROTOCOL", "https")
+  }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   # config.action_mailer.smtp_settings = {
@@ -75,12 +79,18 @@ Rails.application.configure do
   # Only use :id for inspections in production.
   config.active_record.attributes_for_inspect = [ :id ]
 
-  # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
-  #
-  # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  # Allow requests from any host (the app sits behind the server's reverse
+  # proxy / port mapping; tighten to the real domain once DNS is final).
+  config.hosts.clear
+  config.action_dispatch.trusted_proxies = ActionDispatch::RemoteIp::TRUSTED_PROXIES + [
+    IPAddr.new("10.0.0.0/8"),      # Private network
+    IPAddr.new("172.16.0.0/12"),   # Private network
+    IPAddr.new("192.168.0.0/16"),  # Private network
+    IPAddr.new("127.0.0.0/8"),     # Localhost
+    IPAddr.new("::1"),             # IPv6 localhost
+  ]
+
+  # Serve static files from public/ — important for Docker deployments with
+  # no separate web server in front.
+  config.public_file_server.enabled = ENV.fetch("RAILS_SERVE_STATIC_FILES", "true") == "true"
 end
