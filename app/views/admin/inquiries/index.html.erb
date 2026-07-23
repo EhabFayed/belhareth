@@ -1,0 +1,31 @@
+<% content_for :title, "Appointment requests" %>
+<div class="adm-head">
+  <h1 class="adm-title">Appointment requests</h1>
+  <span style="color:rgba(22,40,58,.55)"><%= @inquiries.count %> total · <%= @inquiries.count(&:handled) %> handled</span>
+</div>
+
+<table class="adm">
+  <tr><th>Received</th><th>Name</th><th>Contact</th><th>Reason</th><th>Preferred day / notes</th><th>Lang</th><th>Status</th><th></th></tr>
+  <% @inquiries.each do |inquiry| %>
+  <tr style="<%= 'opacity:.55' if inquiry.handled %>">
+    <td style="white-space:nowrap"><%= inquiry.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+    <td><b><%= inquiry.name %></b></td>
+    <td>
+      <a href="tel:<%= inquiry.mobile %>"><%= inquiry.mobile %></a>
+      <% if inquiry.email.present? %><br><a href="mailto:<%= inquiry.email %>"><%= inquiry.email %></a><% end %>
+      <br><a href="https://wa.me/<%= inquiry.mobile.delete('+') %>" target="_blank" rel="noopener">WhatsApp ↗</a>
+    </td>
+    <td><%= inquiry.reason.presence || "—" %></td>
+    <td style="max-width:260px"><%= inquiry.preferred_day.presence || "—" %><% if inquiry.notes.present? %><br><span style="color:rgba(22,40,58,.6)"><%= inquiry.notes %></span><% end %></td>
+    <td><%= inquiry.preferred_locale&.upcase %></td>
+    <td><span class="badge <%= inquiry.handled ? 'pub' : 'draft' %>"><%= inquiry.handled ? 'Handled' : 'New' %></span></td>
+    <td class="inline-actions">
+      <%= button_to (inquiry.handled ? "Mark new" : "Mark handled"), admin_inquiry_path(inquiry, handled: !inquiry.handled), method: :patch, class: "btn sm ghost" %>
+      <%= button_to "Delete", admin_inquiry_path(inquiry), method: :delete, form: { onsubmit: "return confirm('Delete this request?')" }, class: "btn sm danger" %>
+    </td>
+  </tr>
+  <% end %>
+  <% if @inquiries.empty? %>
+  <tr><td colspan="8" style="text-align:center;color:rgba(22,40,58,.5);padding:34px">No appointment requests yet.</td></tr>
+  <% end %>
+</table>

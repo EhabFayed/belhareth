@@ -4,6 +4,8 @@
 # and recreated between test runs. Don't rely on the data there!
 
 Rails.application.configure do
+  # Jobs run inline against the test adapter (the app default is :sidekiq).
+  config.active_job.queue_adapter = :test
   # Settings specified here will take precedence over those in config/application.rb.
 
   # While tests run files are not watched, reloading is not necessary.

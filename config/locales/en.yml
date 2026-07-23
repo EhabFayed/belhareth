@@ -1,31 +1,212 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  nav:
+    home: "HOME"
+    about: "ABOUT"
+    specialties: "SPECIALTIES"
+    articles: "ARTICLES"
+    faq: "FAQ"
+    contact: "CONTACT"
+    book: "BOOK APPOINTMENT"
+  common:
+    read_guide: "READ THE FULL GUIDE →"
+    book_appointment: "BOOK AN APPOINTMENT"
+    book_assessment: "BOOK AN ASSESSMENT"
+    book_consultation: "BOOK A CONSULTATION"
+    ask_whatsapp: "ASK ON WHATSAPP"
+    whatsapp_us: "WHATSAPP US"
+    whatsapp_clinic: "WHATSAPP THE CLINIC ↗"
+    whatsapp: "WHATSAPP ↗"
+    breadcrumb_home: "HOME"
+    breadcrumb_specialties: "SPECIALTIES"
+    breadcrumb_articles: "ARTICLES"
+    chat_bubble: "Questions? Chat with the clinic"
+    splash_tag: "HIP · KNEE · TRAUMA SURGERY"
+  footer:
+    tagline: "Dr. Mohammed Ali Balhareth — consultant orthopedic surgeon specializing in hip & knee replacement, reconstruction, and trauma surgery in Riyadh."
+    site: "SITE"
+    home: "Home"
+    about: "About the doctor"
+    specialties_link: "Specialties & services"
+    articles_link: "Articles & patient education"
+    faq_link: "Frequently asked questions"
+    contact_link: "Contact & booking"
+    specialties: "SPECIALTIES"
+    contact_us: "CONTACT US"
+    location_html: "Riyadh, Saudi Arabia<br>Dr. Sulaiman Al Habib Medical Group — Al Hamra Hospital"
+    hours_html: "Sat · 9:00 AM–12:00 PM<br>Sun, Tue, Wed · 4:00–8:00 PM"
+    rights: "© %{year} DR. MOHAMMED ALI BALHARETH · ALL RIGHTS RESERVED"
+    book: "Book an appointment"
+  booking:
+    title: "REQUEST AN APPOINTMENT"
+    name: "FULL NAME"
+    mobile: "MOBILE NUMBER"
+    email: "EMAIL (FOR YOUR CONFIRMATION)"
+    success: "Thank you! Your request was received — the clinic will call you to confirm your time."
+    error: "We couldn't send your request: %{errors}"
+    reason: "WHAT BRINGS YOU IN?"
+    reasons:
+      - "Knee pain / osteoarthritis"
+      - "Hip pain / osteoarthritis"
+      - "Fracture or injury"
+      - "DDH / complex hip"
+      - "Second opinion"
+      - "Other"
+    day: "PREFERRED DAY (OPTIONAL)"
+    notes: "ANYTHING WE SHOULD KNOW? (OPTIONAL)"
+    submit: "SUBMIT REQUEST"
+    note: "THE CLINIC WILL CALL TO CONFIRM YOUR TIME"
+  home:
+    eyebrow: "CONSULTANT ORTHOPEDIC SURGEON — RIYADH"
+    hero_pre: "Get back to"
+    hero_post_html: " —<br>without pain."
+    hero_words: "walking|working|playing|praying|living"
+    hero_sub: "Dr. Mohammed Ali Balhareth — Canadian-fellowship consultant in hip & knee replacement and trauma surgery. Utilizing advanced minimally invasive, tendon-sparing techniques for a faster recovery and a pain-free life."
+    rating_html: "<b style=\"color:#16283A\">4.9</b> on Google<br>Trusted by 2,000+ patients"
+    accepting: "Accepting new patients"
+    walk_weeks: "Walk in weeks"
+    rapid: "Rapid-recovery protocols"
+    doctor_chip: "Dr. M. A. Balhareth"
+    doctor_chip_sub: "Hip · Knee · Trauma"
+    stat_years: "YEARS OF EXPERIENCE"
+    stat_procs: "JOINT PROCEDURES"
+    stat_sat: "PATIENT SATISFACTION"
+    stat_rate: "AVERAGE RATING"
+    certified: "CERTIFIED & AFFILIATED"
+    cred1: "Saudi Board of Orthopedic Surgery"
+    cred2: "SCFHS Licensed Consultant"
+    cred3: "Canadian Fellowship in Hip & Knee Reconstruction"
+    cred4: "Canadian Fellowship in Trauma Surgery"
+    marquee: "KNEE REPLACEMENT|HIP REPLACEMENT|FRACTURE & TRAUMA SURGERY|DDH RECONSTRUCTION|SICKLE-CELL HIP DISEASE"
+    about_label: "01 / ABOUT"
+    about_heading_html: "The surgeon<br>dedicated to<br>your comfort"
+    about_para: "Dr. Balhareth is a fellowship-trained consultant specializing in adult hip & knee reconstruction. He blends surgical precision with a patient-centered philosophy, focusing on evidence-based care to improve your quality of life. From managing complex joint conditions like sickle-cell hip and avascular necrosis to providing expert trauma and fracture surgery, his practice is dedicated to helping you achieve lasting relief and functional recovery."
+    full_profile: "FULL PROFILE →"
+    grid_training: "TRAINING"
+    grid_training_v: "Fellowship — Adult Hip & Knee Reconstruction"
+    grid_cert: "CERTIFICATION"
+    grid_cert_v: "Saudi Board & Canadian Fellowships in Hip & Knee Reconstruction and Trauma Surgery"
+    grid_trauma: "TRAUMA"
+    grid_trauma_v: "Consultant — Fracture & Accident Surgery"
+    grid_academia: "ACADEMIA"
+    grid_academia_v: "Researcher & Medical Educator"
+    specialties_label: "02 / SPECIALTIES"
+    why_label: "03 / WHY BALHARETH"
+    why_heading_html: "Precision is<br>a habit, not<br>a promise"
+    why1: "SUBSPECIALTY FOCUS"
+    why1_v: "Dedication to hip and knee surgery daily — mastery through repetition."
+    why2: "MODERN TECHNIQUES"
+    why2_v: "Minimally invasive approaches and rapid-recovery protocols to get you back on your feet faster."
+    why3: "COMPLEX CASES"
+    why3_v: "Region-wide expertise in complex revisions, DDH, and sickle-cell hip disease."
+    why4: "HONEST GUIDANCE"
+    why4_v: "Surgery is recommended only when it is genuinely the best option for your health."
+    journey_label: "04 / TREATMENT JOURNEY"
+    j1: "CONSULTATION"
+    j1_v: "We listen carefully to your pain, history, and goals."
+    j2: "DIAGNOSIS"
+    j2_v: "Accurate examination and precise imaging of your joint."
+    j3: "YOUR PLAN"
+    j3_v: "Conservative care first; surgery chosen only when it is truly the best answer."
+    j4: "PROCEDURE"
+    j4_v: "Modern, safe implants and advanced surgical techniques."
+    j5: "RECOVERY"
+    j5_v: "Structured rehabilitation and dedicated follow-up until you are moving comfortably."
+    contact_label: "05 / CONTACT & BOOKING"
+    contact_heading_html: "Start your<br>recovery <span style=\"color:#1273BF\">today</span>"
+    contact_location: "📍 RIYADH — DR. SULAIMAN AL HABIB MEDICAL GROUP, AL HAMRA HOSPITAL"
+    contact_hours: "🕐 SAT · 9:00 AM–12:00 PM — SUN, TUE, WED · 4:00–8:00 PM"
+  about:
+    eyebrow: "ABOUT THE DOCTOR"
+    name_html: "Dr. Mohammed<br>Ali <span style=\"color:#1273BF\">Balhareth</span>"
+    subtitle: "CONSULTANT — HIP & KNEE REPLACEMENT · RECONSTRUCTION · TRAUMA & FRACTURE SURGERY"
+    intro: "A Canadian-fellowship-trained consultant orthopedic surgeon whose practice is built on a single, patient-centered mission: precise diagnosis, honest clinical guidance, and surgical intervention only when it is truly the best path for your recovery. Dr. Balhareth specializes in managing degenerative joint disease of the hip and knee, complex post-traumatic fractures, and specialized conditions such as developmental dysplasia (DDH), avascular necrosis, and sickle-cell disease of the hip."
+    cred_label: "01 / CREDENTIALS"
+    cred_heading_html: "Training<br>& career"
+    mbbs: "Doctor of Medicine"
+    mbbs_v: "Medical degree with honors, followed by orthopedic surgery residency."
+    board: "Saudi & International Board Certification"
+    board_v: "Certified in orthopedic surgery by Saudi and international boards."
+    fellow: "Fellowship — Adult Hip & Knee Reconstruction"
+    fellow_v: "Subspecialty training in primary and revision joint replacement."
+    now: "Consultant — Hip & Knee Replacement and Trauma"
+    now_v: "Active surgical practice, research, and medical education in Riyadh."
+    phil_label: "02 / PHILOSOPHY"
+    phil_heading_html: "How I decide<br>with you"
+    phil_intro: "Every recommendation follows the same three questions — in this order."
+    q1: "Can we avoid surgery?"
+    q1_v: "If conservative options like physiotherapy or injections can effectively address your condition, that will always be my first recommendation."
+    q2: "If surgery is needed — what is the least invasive solution?"
+    q2_v: "I prioritize joint preservation and partial replacements whenever anatomy allows; our goal is to achieve the best result with the simplest procedure possible."
+    q3: "What does recovery look like for your life?"
+    q3_v: "My plans are built around you — your work, your prayers, and your daily movement — with clear, measurable milestones for your full return to life."
+    quote: "My job is not to operate. My job is to get you moving — and to be honest about the shortest safe road there."
+    quote_by: "— DR. MOHAMMED ALI BALHARETH"
+    memberships: "MEMBERSHIPS"
+    member1: "Saudi Orthopedic Association"
+    member2: "American Academy of Orthopaedic Surgeons (AAOS) — International"
+    member3: "Saudi Commission for Health Specialties (SCFHS)"
+    languages: "CONSULTATION LANGUAGES"
+    lang_ar: "العربية — Arabic"
+    lang_en: "English"
+    lang_note: "Reports and post-operative instructions are provided in both languages."
+    cta_html: "Ready to talk<br>about <span style=\"color:#1273BF\">your joint?</span>"
+  specialties:
+    eyebrow: "SPECIALTIES & SERVICES"
+    heading_html: "Conditions<br>we <span style=\"color:#1273BF\">treat</span>"
+    intro: "We provide expert care in joint reconstruction and trauma management, focusing on restoring mobility and quality of life. Our expertise spans advanced joint replacement for the hip and knee, including minimally invasive techniques that prioritize faster recovery, alongside comprehensive fracture repair and complex orthopedic trauma care."
+  condition:
+    faq_label: "COMMON QUESTIONS"
+    faq_heading_html: "Asked in<br>clinic, daily"
+    cta_html: "Unsure what your<br>joint needs? <span style=\"color:#1273BF\">Ask.</span>"
+  faq_page:
+    eyebrow: "FREQUENTLY ASKED QUESTIONS"
+    heading_html: "Answers,<br>before you <span style=\"color:#1273BF\">ask</span>"
+    intro: "The questions patients ask most frequently — covering appointments, surgery, and the recovery process. Can't find the answer you're looking for? Message the clinic directly via WhatsApp and we will be happy to assist you."
+    group_label: "COMMON QUESTIONS"
+    group_heading_html: "Everything<br>you ask us"
+    group_note: "Each specialty page also answers questions specific to that condition."
+    empty_html: "Answers are being prepared — meanwhile, <a href=\"%{wa}\" target=\"_blank\" rel=\"noopener\" class=\"link-blue\" style=\"color:#1273BF\">WhatsApp the clinic</a> and we'll answer directly."
+    cta_html: "Still have a<br>question? <span style=\"color:#1273BF\">Ask us.</span>"
+  articles:
+    eyebrow: "PATIENT EDUCATION"
+    heading_html: "Understand<br>before you <span style=\"color:#1273BF\">decide</span>"
+    intro: "Plain-language guides and videos on joint pain, surgery, and recovery — written to answer what patients actually search for."
+    all: "ALL"
+    empty_html: "New articles are on the way — follow the clinic on social media, or <a href=\"%{contact}\" class=\"link-blue\" style=\"color:#1273BF\">ask us directly</a>."
+    by: "DR. MOHAMMED ALI BALHARETH"
+    related_label: "COMMON QUESTIONS"
+    related_heading_html: "Related<br>questions"
+    categories:
+      knee: "KNEE"
+      hip: "HIP"
+      trauma: "TRAUMA"
+      recovery: "RECOVERY"
+      general: "GENERAL"
+  contact:
+    eyebrow: "CONTACT & BOOKING"
+    heading_html: "Start your<br>recovery <span style=\"color:#1273BF\">today</span>"
+    intro: "Request an appointment, and our clinic team will confirm your visit within one working day. Prefer to chat? Message us on WhatsApp to get an answer during clinic operating hours."
+    location: "LOCATION"
+    location_v_html: "Riyadh, Saudi Arabia<br>Dr. Sulaiman Al Habib Medical Group — Al Hamra Hospital"
+    phone: "PHONE"
+    hours: "HOURS"
+    hours_v_html: "Sat · 9:00 AM–12:00 PM<br>Sun, Tue, Wed · 4:00–8:00 PM"
+    email: "EMAIL"
+    open_maps: "OPEN IN MAPS ↗"
+  meta:
+    default_title: "Dr. Mohammed Ali Balhareth — Hip & Knee Replacement and Trauma Surgery, Riyadh"
+    title_suffix: "Dr. Balhareth"
+    home_description: "Dr. Mohammed Ali Balhareth — Canadian-fellowship consultant in hip & knee replacement and trauma surgery in Riyadh. Honest answers first, modern surgery when it's truly the best option."
+  mailer:
+    confirmation:
+      subject: "We received your appointment request — Dr. Balhareth Clinic"
+      greeting: "Dear %{name},"
+      body: "Thank you for contacting the clinic of Dr. Mohammed Ali Balhareth. We have received your appointment request, and our team will call you within one working day to confirm your time.\n\nIf your case is urgent, you can reach us directly on WhatsApp: +966 58 377 7871."
+    signature: "Dr. Mohammed Ali Balhareth Clinic — Dr. Sulaiman Al Habib Medical Group, Al Hamra Hospital, Riyadh"
+  activerecord:
+    errors:
+      models:
+        inquiry:
+          attributes:
+            mobile:
+              invalid_ksa_mobile: "must be a valid Saudi mobile number (05XXXXXXXX)"

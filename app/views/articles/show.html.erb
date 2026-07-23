@@ -1,0 +1,45 @@
+<% content_for :title, (rtl? ? @blog.meta_title_ar.presence : @blog.meta_title_en.presence) || loc(@blog, :title) %>
+<% content_for :meta_description, (rtl? ? @blog.meta_description_ar.presence : @blog.meta_description_en.presence) || loc(@blog, :description) %>
+
+<div>
+  <div class="sec-pad" style="padding:64px 48px 56px;background:radial-gradient(110% 85% at 88% 0%,#E4F0F9 0%,rgba(228,240,249,0) 58%),linear-gradient(180deg,#FDFEFF 0%,#F7FAFC 100%)">
+    <div style="display:flex;gap:10px;font-size:12px;letter-spacing:.14em;color:rgba(22,40,58,.5)">
+      <a href="<%= root_path %>" class="link-blue"><%= t("common.breadcrumb_home") %></a><span>/</span>
+      <a href="<%= articles_path %>" class="link-blue"><%= t("common.breadcrumb_articles") %></a><span>/</span>
+      <span style="color:#1273BF"><%= @blog.category ? t("articles.categories.#{@blog.category}", default: @blog.category.to_s.upcase) : t("articles.categories.general") %></span>
+    </div>
+    <div class="m1" style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center;margin-top:36px">
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <h1 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(28px,3.4vw,52px);line-height:1.15;letter-spacing:-.01em"><%= loc(@blog, :title) %></h1>
+        <% if loc(@blog, :description).present? %>
+          <p style="margin:0;font-size:17px;line-height:1.75;color:rgba(22,40,58,.72);max-width:560px"><%= loc(@blog, :description) %></p>
+        <% end %>
+        <div style="font-size:12.5px;letter-spacing:.14em;color:rgba(22,40,58,.5)"><%= I18n.l(@blog.created_at.to_date, format: :long) rescue @blog.created_at.strftime("%Y-%m-%d") %> · <%= t("articles.by") %></div>
+      </div>
+      <% if (photo_url = blog_photo_url(@blog)) %>
+      <div style="width:100%;height:380px"><img class="slot" src="<%= photo_url %>" alt="<%= loc(@blog, :image_alt_text).presence || loc(@blog, :title) %>" style="border-radius:18px;height:380px"></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid rgba(22,40,58,.12);padding-top:56px"></div>
+
+  <%= render "shared/rich_contents", contents: @blog.contents.where(is_deleted: false, is_published: true).order(:id) %>
+
+  <% faqs = @blog.faqs.where(is_deleted: false, is_published: true).order(:id) %>
+  <% if faqs.any? %>
+  <div class="rv m1 sec-pad" style="padding:0 48px 80px;display:grid;grid-template-columns:minmax(0,.4fr) minmax(0,.6fr);gap:56px">
+    <div>
+      <div style="font-size:12px;letter-spacing:.24em;color:#1273BF;margin-bottom:18px"><%= t("articles.related_label") %></div>
+      <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:38px;line-height:1.05;text-transform:uppercase"><%= t("articles.related_heading_html") %></h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <% faqs.each do |faq| %>
+        <%= render "shared/faq_item", q: loc(faq, :question), a: loc(faq, :answer) %>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+
+  <%= render "shared/cta_band", headline_html: t("about.cta_html"), whatsapp: true %>
+</div>

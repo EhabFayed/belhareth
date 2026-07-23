@@ -1,0 +1,6 @@
+<% content_for :title, "New blog" %>
+<div class="adm-head">
+  <h1 class="adm-title">New blog</h1>
+  <a href="<%= admin_blogs_path %>">← All blogs</a>
+</div>
+<%= render "form", blog: @blog %>

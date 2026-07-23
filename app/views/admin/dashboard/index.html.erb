@@ -1,0 +1,19 @@
+<% content_for :title, "Overview" %>
+<div class="adm-head"><h1 class="adm-title">Overview</h1></div>
+
+<div class="stats" style="grid-template-columns:repeat(4,1fr)">
+  <div class="card stat"><b><%= @inquiries_new %> / <%= @inquiries_count %></b><span>NEW REQUESTS<%= " · #{@inquiries_week} THIS WEEK" if @inquiries_week.to_i.positive? %></span><div style="margin-top:12px"><a href="<%= admin_inquiries_path %>">View requests →</a></div></div>
+  <div class="card stat"><b><%= @published_blogs %> / <%= @blogs_count %></b><span>BLOGS PUBLISHED</span><div style="margin-top:12px"><a href="<%= admin_blogs_path %>">Manage blogs →</a></div></div>
+  <div class="card stat"><b><%= @published_ops %> / <%= @operations_count %></b><span>OPERATIONS PUBLISHED</span><div style="margin-top:12px"><a href="<%= admin_operations_path %>">Manage operations →</a></div></div>
+  <div class="card stat"><b><%= @published_faqs %> / <%= @faqs_count %></b><span>GLOBAL FAQS PUBLISHED</span><div style="margin-top:12px"><a href="<%= admin_faqs_path %>">Manage FAQs →</a></div></div>
+</div>
+
+<div class="card" style="margin-top:18px">
+  <b>How content flows to the site</b>
+  <ul style="margin:10px 0 0;padding-left:20px;line-height:1.9;color:rgba(22,40,58,.7)">
+    <li><b>Operations</b> appear as the specialty cards on the home page and under <code>/specialties</code> — only when published.</li>
+    <li><b>Blogs</b> appear under <code>/articles</code>; the "Articles" link shows in the site menu once at least one blog is published.</li>
+    <li><b>Global FAQs</b> appear on the <code>/faq</code> page; FAQs added inside a blog or operation appear on that page only.</li>
+    <li>The public site currently shows the <b>English</b> fields; Arabic fields are stored for the upcoming Arabic version.</li>
+  </ul>
+</div>

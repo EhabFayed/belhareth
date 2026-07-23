@@ -1,0 +1,70 @@
+<%# locals: parent — Blog or Operation %>
+<h2 class="adm-sub">Content blocks</h2>
+<p style="color:rgba(22,40,58,.55);margin:0 0 14px">Each block is one section of the page: text (basic HTML allowed — <code>&lt;h3&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;ul&gt;&lt;li&gt;</code>, <code>&lt;strong&gt;</code>) plus optional photos shown under the text.</p>
+
+<% parent.contents.where(is_deleted: false).order(:id).each do |content| %>
+  <details class="adm-acc">
+    <summary>
+      <span><%= strip_tags(content.content_en.to_s).truncate(80) %><% if content.content_photos.any? %> <span style="color:#1273BF">📷 <%= content.content_photos.size %></span><% end %></span>
+      <span class="badge <%= content.is_published ? 'pub' : 'draft' %>"><%= content.is_published ? 'Published' : 'Draft' %></span>
+    </summary>
+    <div>
+      <%= form_with model: [:admin, parent, content], class: "adm" do |f| %>
+        <div class="row">
+          <div><label>Content (English HTML)</label><%= f.text_area :content_en, rows: 8 %></div>
+          <div><label>Content (Arabic HTML)</label><%= f.text_area :content_ar, rows: 8, dir: "rtl", class: "ar" %></div>
+        </div>
+
+        <label style="margin-top:6px">Photos in this block</label>
+        <% content.content_photos.each do |photo| %>
+          <%= f.fields_for :content_photos, photo do |pf| %>
+            <div class="photo-row">
+              <% if photo.photo.attached? %><img src="<%= url_for(photo.photo) %>" alt=""><% end %>
+              <div><label>Alt (EN)</label><%= pf.text_field :alt_en %></div>
+              <div><label>Alt (AR)</label><%= pf.text_field :alt_ar, dir: "rtl", class: "ar" %></div>
+              <div class="check"><%= pf.check_box :_destroy %> <label style="margin:0;text-transform:none;color:#A02020">Remove</label></div>
+            </div>
+          <% end %>
+        <% end %>
+        <%= f.fields_for :content_photos, content.content_photos.build do |pf| %>
+          <div class="photo-row">
+            <div><label>Add photo</label><%= pf.file_field :photo %></div>
+            <div><label>Alt (EN)</label><%= pf.text_field :alt_en %></div>
+            <div><label>Alt (AR)</label><%= pf.text_field :alt_ar, dir: "rtl", class: "ar" %></div>
+          </div>
+        <% end %>
+
+        <div class="row">
+          <div class="check"><%= f.check_box :is_published %> <label style="margin:0;text-transform:none">Published</label></div>
+        </div>
+        <div class="inline-actions">
+          <%= f.submit "Save block", class: "btn sm" %>
+        </div>
+      <% end %>
+      <%= button_to "Delete block", [:admin, parent, content], method: :delete, form: { onsubmit: "return confirm('Delete this content block?')", style: "margin-top:10px" }, class: "btn sm danger" %>
+    </div>
+  </details>
+<% end %>
+
+<details class="adm-acc" <%= "open" if parent.contents.where(is_deleted: false).none? %>>
+  <summary><span style="color:#1273BF">+ Add content block</span></summary>
+  <div>
+    <%= form_with model: [:admin, parent, Content.new], class: "adm" do |f| %>
+      <div class="row">
+        <div><label>Content (English HTML)</label><%= f.text_area :content_en, rows: 8 %></div>
+        <div><label>Content (Arabic HTML)</label><%= f.text_area :content_ar, rows: 8, dir: "rtl", class: "ar" %></div>
+      </div>
+      <%= f.fields_for :content_photos, ContentPhoto.new do |pf| %>
+        <div class="photo-row">
+          <div><label>Photo (optional)</label><%= pf.file_field :photo %></div>
+          <div><label>Alt (EN)</label><%= pf.text_field :alt_en %></div>
+          <div><label>Alt (AR)</label><%= pf.text_field :alt_ar, dir: "rtl", class: "ar" %></div>
+        </div>
+      <% end %>
+      <div class="row">
+        <div class="check"><%= f.check_box :is_published, {}, "true", "false" %> <label style="margin:0;text-transform:none">Publish immediately</label></div>
+      </div>
+      <%= f.submit "Add block", class: "btn sm" %>
+    <% end %>
+  </div>
+</details>

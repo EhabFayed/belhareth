@@ -1,92 +1,49 @@
-<% content_for :title, @condition.title %>
-<% content_for :meta_description, @condition.overview.truncate(160) %>
+<% content_for :title, (rtl? ? @operation.meta_title_ar.presence : @operation.meta_title_en.presence) || loc(@operation, :title) %>
+<% content_for :meta_description, (rtl? ? @operation.meta_description_ar.presence : @operation.meta_description_en.presence) || loc(@operation, :description) %>
 
 <div>
   <div class="sec-pad" style="padding:64px 48px 56px;background:radial-gradient(110% 85% at 88% 0%,#E4F0F9 0%,rgba(228,240,249,0) 58%),linear-gradient(180deg,#FDFEFF 0%,#F7FAFC 100%)">
     <div style="display:flex;gap:10px;font-size:12px;letter-spacing:.14em;color:rgba(22,40,58,.5)">
-      <a href="<%= root_path %>" class="link-blue">HOME</a><span>/</span>
-      <a href="<%= specialties_path %>" class="link-blue">SPECIALTIES</a><span>/</span>
-      <span style="color:#1273BF"><%= @condition.crumb %></span>
+      <a href="<%= root_path %>" class="link-blue"><%= t("common.breadcrumb_home") %></a><span>/</span>
+      <a href="<%= specialties_path %>" class="link-blue"><%= t("common.breadcrumb_specialties") %></a><span>/</span>
+      <span style="color:#1273BF"><%= loc(@operation, :title).upcase %></span>
     </div>
     <div class="m1" style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center;margin-top:36px">
       <div style="display:flex;flex-direction:column;gap:24px">
-        <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:20px;color:rgba(22,40,58,.35)"><%= @condition.num %></span>
-        <h1 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(28px,3.6vw,58px);line-height:1;text-transform:uppercase;color:#1273BF;overflow-wrap:anywhere"><%= @condition.title %></h1>
-        <p style="margin:0;font-size:17px;line-height:1.75;color:rgba(22,40,58,.72);max-width:540px"><%= @condition.overview %></p>
+        <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:20px;color:rgba(22,40,58,.35)"><%= format('%02d', @position) %></span>
+        <h1 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(28px,3.6vw,58px);line-height:1.15;text-transform:uppercase;color:#1273BF;overflow-wrap:anywhere"><%= loc(@operation, :title) %></h1>
+        <p style="margin:0;font-size:17px;line-height:1.75;color:rgba(22,40,58,.72);max-width:540px"><%= loc(@operation, :description) %></p>
         <div style="display:flex;flex-wrap:wrap;gap:14px">
-          <a href="<%= contact_path %>" class="btn-blue" style="padding:16px 32px;border-radius:999px;background:#1273BF;color:#fff;font-size:14px;font-weight:700;letter-spacing:.06em;transition:background .3s">BOOK AN ASSESSMENT</a>
-          <a href="<%= ApplicationHelper::CLINIC_WHATSAPP_URL %>" target="_blank" rel="noopener" class="btn-wa-outline" style="padding:16px 32px;border-radius:999px;border:1px solid #25D366;color:#128C4B;font-size:14px;font-weight:700;letter-spacing:.06em;transition:background .3s,color .3s">ASK ON WHATSAPP</a>
+          <a href="<%= contact_path %>" class="btn-blue" style="padding:16px 32px;border-radius:999px;background:#1273BF;color:#fff;font-size:14px;font-weight:700;letter-spacing:.06em;transition:background .3s"><%= t("common.book_assessment") %></a>
+          <a href="<%= ApplicationHelper::CLINIC_WHATSAPP_URL %>" target="_blank" rel="noopener" class="btn-wa-outline" style="padding:16px 32px;border-radius:999px;border:1px solid #25D366;color:#128C4B;font-size:14px;font-weight:700;letter-spacing:.06em;transition:background .3s,color .3s"><%= t("common.ask_whatsapp") %></a>
         </div>
       </div>
+      <% if (photo_url = operation_photo_url(@operation, landing: false)) %>
       <div style="position:relative">
-        <div style="width:100%;height:400px"><img class="slot" src="<%= @condition.image %>" alt="<%= @condition.title %> illustration" style="border-radius:18px"></div>
+        <div style="width:100%;height:400px"><img class="slot" src="<%= photo_url %>" alt="<%= loc(@operation, :image_alt_text).presence || loc(@operation, :title) %>" style="border-radius:18px;height:400px"></div>
       </div>
-    </div>
-  </div>
-
-  <!-- symptoms -->
-  <div class="rv m1 sec-pad" style="border-top:1px solid rgba(22,40,58,.12);padding:80px 48px;display:grid;grid-template-columns:minmax(0,.4fr) minmax(0,.6fr);gap:56px">
-    <div>
-      <div style="font-size:12px;letter-spacing:.24em;color:#1273BF;margin-bottom:18px">01 / SYMPTOMS</div>
-      <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:38px;line-height:1.05;text-transform:uppercase">Signs that<br>matter</h2>
-      <p style="margin:22px 0 0;font-size:14.5px;line-height:1.7;color:rgba(22,40,58,.6)">If you recognize two or more of these symptoms, a professional assessment is your best next step.</p>
-    </div>
-    <div style="display:flex;flex-direction:column">
-      <% @condition.symptoms.each do |s| %>
-        <div style="display:grid;grid-template-columns:40px 1fr;gap:18px;align-items:center;padding:20px 8px;border-top:1px solid rgba(22,40,58,.12)">
-          <span style="width:10px;height:10px;background:#1273BF"></span>
-          <span style="font-size:16px;line-height:1.5"><%= s %></span>
-        </div>
       <% end %>
-      <div style="border-top:1px solid rgba(22,40,58,.12)"></div>
     </div>
   </div>
 
-  <!-- treatment options -->
-  <div class="rv sec-pad" style="padding:0 48px 80px">
-    <div style="font-size:12px;letter-spacing:.24em;color:#1273BF;margin-bottom:18px">02 / TREATMENT OPTIONS</div>
-    <div class="m1" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-      <div style="border:1px solid rgba(22,40,58,.1);border-radius:18px;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);padding:36px">
-        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:24px;text-transform:uppercase;margin-bottom:8px">Non-surgical first</div>
-        <div style="font-size:13px;letter-spacing:.12em;color:rgba(22,40,58,.5);margin-bottom:24px">ALWAYS THE STARTING POINT WHERE POSSIBLE</div>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <% @condition.conservative.each do |t| %>
-            <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:baseline"><span style="color:#1273BF;font-weight:700">—</span><span style="font-size:15px;line-height:1.6;color:rgba(22,40,58,.75)"><%= t %></span></div>
-          <% end %>
-        </div>
-      </div>
-      <div style="border:1px solid rgba(18,115,191,.35);border-radius:18px;box-shadow:0 6px 22px rgba(18,115,191,.1);background:#FFFFFF;padding:36px">
-        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:24px;text-transform:uppercase;margin-bottom:8px;color:#1273BF">Surgical solutions</div>
-        <div style="font-size:13px;letter-spacing:.12em;color:rgba(22,40,58,.5);margin-bottom:24px">WHEN CONSERVATIVE CARE IS NO LONGER ENOUGH</div>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <% @condition.surgical.each do |t| %>
-            <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:baseline"><span style="color:#1273BF;font-weight:700">—</span><span style="font-size:15px;line-height:1.6;color:rgba(22,40,58,.85)"><%= t %></span></div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div style="border-top:1px solid rgba(22,40,58,.12);padding-top:56px"></div>
 
-  <!-- when surgery -->
-  <div class="sec-pad" style="padding:0 48px 80px">
-    <div class="m1" style="border:1px solid rgba(18,115,191,.3);border-radius:22px;box-shadow:0 10px 34px rgba(22,40,58,.07);background:#FFFFFF;padding:48px 56px;display:grid;grid-template-columns:minmax(0,.35fr) minmax(0,.65fr);gap:44px;align-items:center">
-      <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:32px;line-height:1.1;text-transform:uppercase">When is surgery the <span style="color:#1273BF">best option?</span></h2>
-      <p style="margin:0;font-size:16px;line-height:1.75;color:rgba(22,40,58,.75)"><%= @condition.when_surgery %></p>
-    </div>
-  </div>
+  <%= render "shared/rich_contents", contents: @operation.contents.where(is_deleted: false, is_published: true).order(:id) %>
 
-  <!-- FAQ -->
+  <% faqs = @operation.faqs.where(is_deleted: false, is_published: true).order(:id) %>
+  <% if faqs.any? %>
   <div class="rv m1 sec-pad" style="padding:0 48px 80px;display:grid;grid-template-columns:minmax(0,.4fr) minmax(0,.6fr);gap:56px">
     <div>
-      <div style="font-size:12px;letter-spacing:.24em;color:#1273BF;margin-bottom:18px">03 / COMMON QUESTIONS</div>
-      <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:38px;line-height:1.05;text-transform:uppercase">Asked in<br>clinic, daily</h2>
+      <div style="font-size:12px;letter-spacing:.24em;color:#1273BF;margin-bottom:18px"><%= t("condition.faq_label") %></div>
+      <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:38px;line-height:1.05;text-transform:uppercase"><%= t("condition.faq_heading_html") %></h2>
     </div>
     <div style="display:flex;flex-direction:column;gap:14px">
-      <% @condition.faq.each do |f| %>
-        <%= render "shared/faq_item", q: f[:q], a: f[:a] %>
+      <% faqs.each do |faq| %>
+        <%= render "shared/faq_item", q: loc(faq, :question), a: loc(faq, :answer) %>
       <% end %>
     </div>
   </div>
+  <% end %>
 
-  <%= render "shared/cta_band", headline_html: raw("Unsure what your<br>joint needs? <span style=\"color:#1273BF\">Ask.</span>"), whatsapp: true %>
+  <%= render "shared/cta_band", headline_html: t("condition.cta_html"), whatsapp: true %>
 </div>

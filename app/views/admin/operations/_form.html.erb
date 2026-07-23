@@ -1,0 +1,59 @@
+<%= form_with model: [:admin, operation], class: "adm" do |f| %>
+  <div class="card">
+    <div class="row">
+      <div><label>Title (EN)</label><%= f.text_field :title_en %></div>
+      <div><label>Title (AR)</label><%= f.text_field :title_ar, dir: "rtl", class: "ar" %></div>
+    </div>
+    <div class="row">
+      <div><label>Overview (EN — shown under the title)</label><%= f.text_area :description_en, rows: 4 %></div>
+      <div><label>Overview (AR)</label><%= f.text_area :description_ar, rows: 4, dir: "rtl", class: "ar" %></div>
+    </div>
+    <div class="row">
+      <div><label>Slug (EN, in the URL)</label><%= f.text_field :slug, placeholder: "knee" %></div>
+      <div><label>Slug (AR)</label><%= f.text_field :slug_ar, dir: "rtl", class: "ar" %></div>
+    </div>
+    <div class="row">
+      <div><label>Category</label><%= f.select :category, Operation.category.options %></div>
+      <div class="check" style="align-self:end"><%= f.check_box :is_published %> <label style="margin:0;text-transform:none">Published (visible on the site)</label></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <b>SEO</b>
+    <div class="row" style="margin-top:12px">
+      <div><label>Meta title (EN)</label><%= f.text_field :meta_title_en %></div>
+      <div><label>Meta title (AR)</label><%= f.text_field :meta_title_ar, dir: "rtl", class: "ar" %></div>
+    </div>
+    <div class="row">
+      <div><label>Meta description (EN)</label><%= f.text_area :meta_description_en, rows: 2 %></div>
+      <div><label>Meta description (AR)</label><%= f.text_area :meta_description_ar, rows: 2, dir: "rtl", class: "ar" %></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <b>Photos</b> <span style="color:rgba(22,40,58,.5)">— "Landing" photo shows on the home-page card; the other photo shows on the operation page itself.</span>
+    <div style="margin-top:12px">
+      <% operation.operation_photos.each do |photo| %>
+        <%= f.fields_for :operation_photos, photo do |pf| %>
+          <div class="photo-row">
+            <% if photo.photo.attached? %><img src="<%= url_for(photo.photo) %>" alt=""><% end %>
+            <div><label>Alt (EN)</label><%= pf.text_field :alt_en %></div>
+            <div><label>Alt (AR)</label><%= pf.text_field :alt_ar, dir: "rtl", class: "ar" %></div>
+            <div class="check"><%= pf.check_box :is_landing %> <label style="margin:0;text-transform:none">Landing (home card)</label></div>
+            <div class="check"><%= pf.check_box :_destroy %> <label style="margin:0;text-transform:none;color:#A02020">Remove</label></div>
+          </div>
+        <% end %>
+      <% end %>
+      <%= f.fields_for :operation_photos, operation.operation_photos.build do |pf| %>
+        <div class="photo-row">
+          <div><label>New photo</label><%= pf.file_field :photo %></div>
+          <div><label>Alt (EN)</label><%= pf.text_field :alt_en %></div>
+          <div><label>Alt (AR)</label><%= pf.text_field :alt_ar, dir: "rtl", class: "ar" %></div>
+          <div class="check"><%= pf.check_box :is_landing %> <label style="margin:0;text-transform:none">Landing (home card)</label></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%= f.submit (operation.persisted? ? "Save operation" : "Create operation"), class: "btn" %>
+<% end %>

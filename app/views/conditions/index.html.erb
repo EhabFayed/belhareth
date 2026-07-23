@@ -1,20 +1,25 @@
-<% content_for :title, "Specialties & Services" %>
-<% content_for :meta_description, "Conditions we treat: knee osteoarthritis, hip osteoarthritis, fractures & trauma, and complex hip cases (DDH, sickle-cell hip disease) — in-depth guides by Dr. Balhareth." %>
+<% content_for :title, rtl? ? "التخصصات والخدمات" : "Specialties & Services" %>
+<% content_for :meta_description, t("specialties.intro").truncate(200) %>
 
 <div>
   <div class="sec-pad" style="padding:80px 48px 56px;background:radial-gradient(110% 85% at 88% 0%,#E4F0F9 0%,rgba(228,240,249,0) 58%),linear-gradient(180deg,#FDFEFF 0%,#F7FAFC 100%)">
-    <div style="display:flex;align-items:center;gap:12px;animation:fadeUp .7s .1s ease both"><svg width="64" height="22" viewBox="0 0 64 22" style="overflow:visible;flex:none"><path d="M0 11 H14 L19 3 L25 19 L30 11 H64" fill="none" stroke="#1273BF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="110" stroke-dashoffset="110" style="animation:ecg 2.8s linear infinite"></path></svg><span style="font-size:12px;letter-spacing:.24em;color:#1273BF">SPECIALTIES &amp; SERVICES</span></div>
-    <h1 style="margin:22px 0 0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(36px,4.8vw,62px);line-height:1;text-transform:uppercase;animation:fadeUp .7s .25s ease both">Conditions<br>we <span style="color:#1273BF">treat</span></h1>
-    <p style="margin:24px 0 0;max-width:600px;font-size:16px;line-height:1.7;color:rgba(22,40,58,.65);animation:fadeUp .7s .4s ease both">We provide expert care in joint reconstruction and trauma management, focusing on restoring mobility and quality of life. Our expertise spans advanced joint replacement for the hip and knee, including minimally invasive techniques that prioritize faster recovery, alongside comprehensive fracture repair and complex orthopedic trauma care.</p>
+    <div style="display:flex;align-items:center;gap:12px;animation:fadeUp .7s .1s ease both"><svg width="64" height="22" viewBox="0 0 64 22" style="overflow:visible;flex:none"><path d="M0 11 H14 L19 3 L25 19 L30 11 H64" fill="none" stroke="#1273BF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="110" stroke-dashoffset="110" style="animation:ecg 2.8s linear infinite"></path></svg><span style="font-size:12px;letter-spacing:.24em;color:#1273BF"><%= t("specialties.eyebrow") %></span></div>
+    <h1 style="margin:22px 0 0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(36px,4.8vw,62px);line-height:1;text-transform:uppercase;animation:fadeUp .7s .25s ease both"><%= t("specialties.heading_html") %></h1>
+    <p style="margin:24px 0 0;max-width:600px;font-size:16px;line-height:1.7;color:rgba(22,40,58,.65);animation:fadeUp .7s .4s ease both"><%= t("specialties.intro") %></p>
   </div>
   <div class="m1 sec-pad" style="padding:0 48px 88px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
-    <% [
-      ["knee",    "01", "Knee Osteoarthritis", "Knee cartilage wear causing pain and stiffness. We offer solutions ranging from joint preservation to precise knee replacement."],
-      ["hip",     "02", "Hip Osteoarthritis",  "Groin pain, stiffness, and limping caused by a worn hip joint. Modern, rapid-recovery hip replacement."],
-      ["trauma",  "03", "Fractures & Trauma",  "Expert surgical care for fractures from falls and road accidents — specializing in fixation, reconstruction, and staged treatment."],
-      ["complex", "04", "Complex Hip Cases",   "Specialized reconstruction for difficult anatomy, including DDH and sickle-cell hip disease."]
-    ].each do |slug, n, title, blurb| %>
-    <a href="<%= specialty_path(slug) %>" class="card-line" style="border:1px solid rgba(22,40,58,.1);border-radius:18px;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);padding:36px;display:flex;flex-direction:column;gap:40px;transition:border-color .3s,transform .3s"><span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:26px;color:rgba(22,40,58,.35)"><%= n %></span><div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:30px;text-transform:uppercase;margin-bottom:12px"><%= title %></div><div style="font-size:15px;line-height:1.65;color:rgba(22,40,58,.6)"><%= blurb %></div><div style="margin-top:20px;color:#1273BF;font-size:13px;letter-spacing:.12em">READ THE FULL GUIDE →</div></div></a>
+    <% @operations.each_with_index do |operation, i| %>
+    <a href="<%= specialty_path(loc_slug(operation)) %>" class="card-line" style="border:1px solid rgba(22,40,58,.1);border-radius:18px;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);overflow:hidden;display:flex;flex-direction:column;transition:border-color .3s,transform .3s">
+      <% if (photo_url = operation_photo_url(operation, landing: true)) %>
+        <div style="height:230px;position:relative">
+          <img class="slot" src="<%= photo_url %>" alt="<%= loc(operation, :image_alt_text).presence || loc(operation, :title) %>" style="height:230px;border-radius:0">
+          <span style="position:absolute;top:16px;<%= rtl? ? 'right' : 'left' %>:16px;background:rgba(255,255,255,.92);color:#1273BF;border-radius:999px;padding:6px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:14px"><%= format('%02d', i + 1) %></span>
+        </div>
+      <% else %>
+        <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:26px;color:rgba(22,40,58,.35);padding:36px 36px 0"><%= format('%02d', i + 1) %></span>
+      <% end %>
+      <div style="padding:28px 36px 36px"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:30px;text-transform:uppercase;margin-bottom:12px"><%= loc(operation, :title) %></div><div style="font-size:15px;line-height:1.65;color:rgba(22,40,58,.6)"><%= loc(operation, :description) %></div><div style="margin-top:20px;color:#1273BF;font-size:13px;letter-spacing:.12em"><%= t("common.read_guide") %></div></div>
+    </a>
     <% end %>
   </div>
 </div>

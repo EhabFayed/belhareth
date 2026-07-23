@@ -1,0 +1,48 @@
+<%# locals: parent — Blog or Operation %>
+<h2 class="adm-sub">FAQs on this page</h2>
+
+<% parent.faqs.where(is_deleted: false).order(:id).each do |faq| %>
+  <details class="adm-acc">
+    <summary>
+      <span><%= faq.question_en.to_s.truncate(80) %></span>
+      <span class="badge <%= faq.is_published ? 'pub' : 'draft' %>"><%= faq.is_published ? 'Published' : 'Draft' %></span>
+    </summary>
+    <div>
+      <%= form_with model: [:admin, parent, faq], class: "adm" do |f| %>
+        <div class="row">
+          <div><label>Question (EN)</label><%= f.text_field :question_en %></div>
+          <div><label>Question (AR)</label><%= f.text_field :question_ar, dir: "rtl", class: "ar" %></div>
+        </div>
+        <div class="row">
+          <div><label>Answer (EN)</label><%= f.text_area :answer_en, rows: 4 %></div>
+          <div><label>Answer (AR)</label><%= f.text_area :answer_ar, rows: 4, dir: "rtl", class: "ar" %></div>
+        </div>
+        <div class="row">
+          <div class="check"><%= f.check_box :is_published %> <label style="margin:0;text-transform:none">Published</label></div>
+        </div>
+        <%= f.submit "Save FAQ", class: "btn sm" %>
+      <% end %>
+      <%= button_to "Delete FAQ", [:admin, parent, faq], method: :delete, form: { onsubmit: "return confirm('Delete this FAQ?')", style: "margin-top:10px" }, class: "btn sm danger" %>
+    </div>
+  </details>
+<% end %>
+
+<details class="adm-acc" <%= "open" if parent.faqs.where(is_deleted: false).none? %>>
+  <summary><span style="color:#1273BF">+ Add FAQ</span></summary>
+  <div>
+    <%= form_with model: [:admin, parent, Faq.new], class: "adm" do |f| %>
+      <div class="row">
+        <div><label>Question (EN)</label><%= f.text_field :question_en %></div>
+        <div><label>Question (AR)</label><%= f.text_field :question_ar, dir: "rtl", class: "ar" %></div>
+      </div>
+      <div class="row">
+        <div><label>Answer (EN)</label><%= f.text_area :answer_en, rows: 4 %></div>
+        <div><label>Answer (AR)</label><%= f.text_area :answer_ar, rows: 4, dir: "rtl", class: "ar" %></div>
+      </div>
+      <div class="row">
+        <div class="check"><%= f.check_box :is_published, {}, "true", "false" %> <label style="margin:0;text-transform:none">Publish immediately</label></div>
+      </div>
+      <%= f.submit "Add FAQ", class: "btn sm" %>
+    <% end %>
+  </div>
+</details>

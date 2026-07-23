@@ -1,24 +1,17 @@
-<%# Appointment request form — no backend yet: SUBMIT composes a WhatsApp
-    message to the clinic from the entered fields (see bookingForm in site.js).
+<%# Appointment request form — saves an Inquiry and sends two emails
+    (clinic notification + visitor confirmation), like the neuskin flow.
     locals: compact (bool) — smaller variant used on the home page. %>
 <% compact = local_assigns.fetch(:compact, false) %>
-<form data-booking-form style="border:1px solid rgba(22,40,58,.12);border-radius:22px;box-shadow:0 10px 34px rgba(22,40,58,.08);background:#FFFFFF;padding:<%= compact ? '38px 40px' : '42px 44px' %>;display:flex;flex-direction:column;gap:16px;align-self:start">
-  <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:<%= compact ? '20px' : '22px' %>;letter-spacing:.04em">REQUEST AN APPOINTMENT</div>
-  <input class="inp" placeholder="FULL NAME" name="name" autocomplete="name">
-  <input class="inp" placeholder="MOBILE NUMBER" name="phone" autocomplete="tel">
-  <select class="inp" name="reason" style="background:#FFFFFF;color:rgba(22,40,58,.7)">
-    <option>WHAT BRINGS YOU IN?</option>
-    <option>Knee pain / osteoarthritis</option>
-    <option>Hip pain / osteoarthritis</option>
-    <option>Fracture or injury</option>
-    <option>DDH / complex hip</option>
-    <option>Second opinion</option>
-    <option>Other</option>
-  </select>
+<%= form_with url: inquiries_path, method: :post, scope: :inquiry, html: { style: "border:1px solid rgba(22,40,58,.12);border-radius:22px;box-shadow:0 10px 34px rgba(22,40,58,.08);background:#FFFFFF;padding:#{compact ? '38px 40px' : '42px 44px'};display:flex;flex-direction:column;gap:16px;align-self:start" } do |f| %>
+  <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:<%= compact ? '20px' : '22px' %>;letter-spacing:.04em"><%= t("booking.title") %></div>
+  <%= f.text_field :name, class: "inp", placeholder: t("booking.name"), autocomplete: "name", required: true %>
+  <%= f.telephone_field :mobile, class: "inp", placeholder: t("booking.mobile"), autocomplete: "tel", required: true %>
+  <%= f.email_field :email, class: "inp", placeholder: t("booking.email"), autocomplete: "email" %>
+  <%= f.select :reason, t("booking.reasons").map { |r| [r, r] }, { include_blank: t("booking.reason") }, class: "inp", style: "background:#FFFFFF;color:rgba(22,40,58,.7)" %>
   <% unless compact %>
-    <input class="inp" placeholder="PREFERRED DAY (OPTIONAL)" name="day">
-    <textarea class="inp" placeholder="ANYTHING WE SHOULD KNOW? (OPTIONAL)" name="notes" rows="3" style="resize:vertical"></textarea>
+    <%= f.text_field :preferred_day, class: "inp", placeholder: t("booking.day") %>
+    <%= f.text_area :notes, class: "inp", placeholder: t("booking.notes"), rows: 3, style: "resize:vertical" %>
   <% end %>
-  <button type="submit" class="btn-blue" style="margin-top:8px;text-align:center;background:#1273BF;color:#fff;border:none;border-radius:999px;padding:<%= compact ? '16px' : '17px' %>;font-size:14px;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:background .3s;font-family:'Figtree',sans-serif">SUBMIT REQUEST</button>
-  <span style="font-size:12px;letter-spacing:.06em;color:rgba(22,40,58,.45);text-align:center">THE CLINIC WILL CALL TO CONFIRM YOUR TIME</span>
-</form>
+  <button type="submit" class="btn-blue" style="margin-top:8px;text-align:center;background:#1273BF;color:#fff;border:none;border-radius:999px;padding:<%= compact ? '16px' : '17px' %>;font-size:14px;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:background .3s;font-family:inherit"><%= t("booking.submit") %></button>
+  <span style="font-size:12px;letter-spacing:.06em;color:rgba(22,40,58,.45);text-align:center"><%= t("booking.note") %></span>
+<% end %>

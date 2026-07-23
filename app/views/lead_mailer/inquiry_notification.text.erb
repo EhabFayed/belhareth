@@ -1,0 +1,12 @@
+New appointment request received.
+
+Name:           <%= @inquiry.name %>
+Mobile:         <%= @inquiry.mobile %>
+Email:          <%= @inquiry.email.presence || "—" %>
+Reason:         <%= @inquiry.reason.presence || "—" %>
+Preferred day:  <%= @inquiry.preferred_day.presence || "—" %>
+Notes:          <%= @inquiry.notes.presence || "—" %>
+Language:       <%= @inquiry.preferred_locale %>
+Received:       <%= @inquiry.created_at.strftime("%Y-%m-%d %H:%M") %>
+
+Please call the patient to confirm the appointment time.

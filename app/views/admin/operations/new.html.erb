@@ -1,0 +1,6 @@
+<% content_for :title, "New operation" %>
+<div class="adm-head">
+  <h1 class="adm-title">New operation</h1>
+  <a href="<%= admin_operations_path %>">← All operations</a>
+</div>
+<%= render "form", operation: @operation %>
