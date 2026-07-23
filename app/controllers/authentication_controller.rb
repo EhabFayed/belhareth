@@ -1,9 +1,13 @@
 class AuthenticationController < ApiController
   include Rails.application.routes.url_helpers
-  skip_before_action :authorize_request, only: [:login, :signup]
+  # Deviation from dr_elmunify: signup is NOT public here — this app also has
+  # a session admin at /admin, so only an authenticated user (or the /admin
+  # Users page) may create accounts.
+  skip_before_action :authorize_request, only: [:login]
 
   def signup
     user = User.new(user_params)
+    user.approved = true # created by an already-authenticated staff member
     if user.save
       user.image.attach(params[:user][:image]) if params[:user][:image].present?
       token = encode_token(user.id)
@@ -16,6 +20,9 @@ class AuthenticationController < ApiController
   def login
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
+      unless user.approved?
+        return render json: { error: 'Account pending approval' }, status: :forbidden
+      end
       token = encode_token(user.id)
       render json: { user: user_response(user), token: token }, status: :ok
     else

@@ -5,7 +5,9 @@ class User < ApplicationRecord
   has_many :contents
   has_one_attached :image
 
-  validates :name, presence: true
+  scope :approved, -> { where(approved: true) }
+  scope :pending,  -> { where(approved: false) }
+
   validates :email, presence: true, uniqueness: true, format: { with: /\A[\w+\-.]+@milaknights\.com\z/i, message: "must be a milaknights.com email" }
   validates :password, presence: true, length: { minimum: 6 }, if: -> { password_digest_changed? }
   validate :email_unchanged, on: :update

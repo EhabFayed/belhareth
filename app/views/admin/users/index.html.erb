@@ -1,0 +1,54 @@
+<% content_for :title, "Users" %>
+<div class="adm-head">
+  <h1 class="adm-title">Users</h1>
+</div>
+<p style="color:rgba(22,40,58,.55);margin:0 0 18px">Approved users can sign in to this admin and to the dashboard API. Emails must be <b>@milaknights.com</b>.</p>
+
+<% if @pending.any? %>
+<h2 class="adm-sub" style="margin-top:0">Waiting for approval</h2>
+<table class="adm" style="margin-bottom:26px">
+  <tr><th>Name</th><th>Email</th><th>Requested</th><th></th></tr>
+  <% @pending.each do |user| %>
+  <tr>
+    <td><b><%= user.name %></b></td>
+    <td><%= user.email %></td>
+    <td><%= user.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+    <td class="inline-actions">
+      <%= button_to "Approve", approve_admin_user_path(user), method: :patch, class: "btn sm" %>
+      <%= button_to "Reject", admin_user_path(user), method: :delete, form: { onsubmit: "return confirm('Reject and delete #{user.email}?')" }, class: "btn sm danger" %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<% end %>
+
+<h2 class="adm-sub" style="margin-top:0">Approved users</h2>
+<table class="adm" style="margin-bottom:26px">
+  <tr><th>Name</th><th>Email</th><th>Created</th><th></th></tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td><b><%= user.name %></b><%= " (you)" if user.id == current_admin.id %></td>
+    <td><%= user.email %></td>
+    <td><%= user.created_at.strftime("%Y-%m-%d") %></td>
+    <td class="inline-actions">
+      <% if user.id != current_admin.id %>
+        <%= button_to "Delete", admin_user_path(user), method: :delete, form: { onsubmit: "return confirm('Delete #{user.email}? They will no longer be able to sign in.')" }, class: "btn sm danger" %>
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<div class="card">
+  <b>Add user</b> <span style="color:rgba(22,40,58,.5)">(created already approved)</span>
+  <%= form_with model: [:admin, @user], class: "adm" do |f| %>
+    <div class="row" style="margin-top:12px">
+      <div><label>Name</label><%= f.text_field :name, required: true %></div>
+      <div><label>Email (@milaknights.com)</label><%= f.email_field :email, required: true, placeholder: "name@milaknights.com" %></div>
+    </div>
+    <div class="row">
+      <div><label>Password (min 6 characters)</label><%= f.password_field :password, required: true, minlength: 6, autocomplete: "new-password" %></div>
+    </div>
+    <%= f.submit "Create user", class: "btn" %>
+  <% end %>
+</div>

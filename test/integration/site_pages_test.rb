@@ -2,7 +2,7 @@ require "test_helper"
 
 class SitePagesTest < ActionDispatch::IntegrationTest
   setup do
-    @admin = User.create!(name: "Admin", email: "admin@milaknights.com", password: "secret123")
+    @admin = User.create!(name: "Admin", email: "admin@milaknights.com", password: "secret123", approved: true)
 
     @operation = Operation.create!(
       title_en: "Knee Osteoarthritis", title_ar: "خشونة الركبة",
@@ -212,6 +212,84 @@ class SitePagesTest < ActionDispatch::IntegrationTest
 
     patch admin_inquiry_path(inquiry, handled: true)
     assert inquiry.reload.handled
+  end
+
+  test "signup requires authentication; admin users page creates and deletes users" do
+    # API signup is no longer public (deviation from elmunifi: /admin exists here)
+    post "/signup", params: { user: { name: "Intruder", email: "x@milaknights.com", password: "hackhack" } }, as: :json
+    assert_response :unauthorized
+
+    # with a valid JWT it still works (dashboard flow)
+    post "/login", params: { email: @admin.email, password: "secret123" }, as: :json
+    token = JSON.parse(response.body)["token"]
+    assert_difference "User.count", 1 do
+      post "/signup", params: { user: { name: "Editor", email: "editor@milaknights.com", password: "secret123" } },
+                      headers: { "Authorization" => "Bearer #{token}" }, as: :json
+    end
+
+    # in-app admin users page
+    post admin_login_path, params: { email: @admin.email, password: "secret123" }
+    get admin_users_path
+    assert_response :success
+    assert_includes response.body, "editor@milaknights.com"
+
+    assert_difference "User.count", 1 do
+      post admin_users_path, params: { user: { name: "Second", email: "second@milaknights.com", password: "secret123" } }
+    end
+
+    # wrong domain rejected
+    assert_no_difference "User.count" do
+      post admin_users_path, params: { user: { name: "Bad", email: "bad@gmail.com", password: "secret123" } }
+    end
+
+    # cannot delete own account
+    assert_no_difference "User.count" do
+      delete admin_user_path(@admin)
+    end
+    assert_difference "User.count", -1 do
+      delete admin_user_path(User.find_by(email: "second@milaknights.com"))
+    end
+  end
+
+  test "admin signup creates a pending user; approval is required before sign-in" do
+    get admin_signup_path
+    assert_response :success
+
+    assert_difference "User.count", 1 do
+      post admin_signup_path, params: { user: { name: "New Member", email: "member@milaknights.com",
+                                                password: "secret123", password_confirmation: "secret123" } }
+    end
+    # NOT signed in — sent back to the login page with a pending notice
+    assert_redirected_to admin_login_path
+    member = User.find_by(email: "member@milaknights.com")
+    assert_not member.approved?
+
+    # pending users cannot sign in (admin session or API)
+    post admin_login_path, params: { email: member.email, password: "secret123" }
+    assert_response :unprocessable_entity
+    post "/login", params: { email: member.email, password: "secret123" }, as: :json
+    assert_response :forbidden
+
+    # an admin approves them from the Users page — then login works
+    post admin_login_path, params: { email: @admin.email, password: "secret123" }
+    get admin_users_path
+    assert_includes response.body, "Waiting for approval"
+    patch approve_admin_user_path(member)
+    assert member.reload.approved?
+
+    delete admin_logout_path
+    post admin_login_path, params: { email: member.email, password: "secret123" }
+    assert_redirected_to admin_root_path
+
+    # wrong domain / mismatched confirmation are rejected
+    assert_no_difference "User.count" do
+      post admin_signup_path, params: { user: { name: "Bad", email: "bad@gmail.com",
+                                                password: "secret123", password_confirmation: "secret123" } }
+      assert_response :unprocessable_entity
+      post admin_signup_path, params: { user: { name: "Bad2", email: "bad2@milaknights.com",
+                                                password: "secret123", password_confirmation: "different" } }
+      assert_response :unprocessable_entity
+    end
   end
 
   test "admin requires login and works with a session" do

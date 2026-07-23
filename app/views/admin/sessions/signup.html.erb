@@ -1,0 +1,31 @@
+<div class="login-card">
+  <h1>BALHARETH<span style="color:#1273BF">.</span>ORTHO — Create account</h1>
+  <%= form_with model: @user, url: admin_signup_path, method: :post, class: "adm" do |f| %>
+    <div class="row single">
+      <div>
+        <label>Name</label>
+        <%= f.text_field :name, required: true, autofocus: true, autocomplete: "name" %>
+      </div>
+    </div>
+    <div class="row single">
+      <div>
+        <label>Email (@milaknights.com)</label>
+        <%= f.email_field :email, required: true, placeholder: "name@milaknights.com", autocomplete: "email" %>
+      </div>
+    </div>
+    <div class="row single">
+      <div>
+        <label>Password (min 6 characters)</label>
+        <%= f.password_field :password, required: true, minlength: 6, autocomplete: "new-password" %>
+      </div>
+    </div>
+    <div class="row single">
+      <div>
+        <label>Confirm password</label>
+        <%= f.password_field :password_confirmation, required: true, minlength: 6, autocomplete: "new-password" %>
+      </div>
+    </div>
+    <button class="btn" style="width:100%">CREATE ACCOUNT</button>
+  <% end %>
+  <p style="margin:18px 0 0;text-align:center;font-size:13.5px">Already have an account? <a href="<%= admin_login_path %>">Sign in</a></p>
+</div>
