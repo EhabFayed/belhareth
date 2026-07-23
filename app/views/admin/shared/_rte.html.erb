@@ -1,0 +1,10 @@
+<%# Rich text editor bound to an HTML form field.
+    locals: f (form builder), attr (:content_en / :content_ar), label,
+            dir ("ltr"/"rtl"), value (current HTML) %>
+<div>
+  <label><%= label %></label>
+  <div data-rte data-dir="<%= dir %>">
+    <%= f.hidden_field attr %>
+    <div class="rte-editor" <%= 'dir=rtl' if dir == 'rtl' %>><%= rich(value) %></div>
+  </div>
+</div>

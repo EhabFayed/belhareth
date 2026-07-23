@@ -97,6 +97,18 @@ class SitePagesTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "رسم توضيحي"
   end
 
+  test "content blocks are published by default; only the blog flag gates visibility" do
+    block = @blog.contents.create!(content_en: "<p>Default visible.</p>", content_ar: "<p>ظاهر.</p>", user_id: @admin.id)
+    assert block.is_published, "content should default to published"
+
+    get "/articles/#{@blog.slug}"
+    assert_includes response.body, "Default visible."
+
+    @blog.update!(is_published: false)
+    get "/articles/#{@blog.slug}"
+    assert_response :not_found
+  end
+
   test "draft article 404s" do
     get "/articles/#{@draft_blog.slug}"
     assert_response :not_found

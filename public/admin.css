@@ -69,3 +69,11 @@ form.adm .check input { width: 16px; height: 16px; }
 details.adm-acc { border: 1px solid rgba(22,40,58,.12); border-radius: 12px; background: #fff; margin-bottom: 12px; }
 details.adm-acc > summary { cursor: pointer; padding: 14px 18px; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
 details.adm-acc > div { padding: 4px 18px 18px; border-top: 1px solid rgba(22,40,58,.08); }
+
+/* rich text editor */
+[data-rte] { background: #fff; }
+[data-rte] .ql-toolbar { border-radius: 10px 10px 0 0; border-color: rgba(22,40,58,.18); }
+[data-rte] .ql-container { border-radius: 0 0 10px 10px; border-color: rgba(22,40,58,.18); font-family: inherit; font-size: 14px; }
+[data-rte] .rte-editor { min-height: 170px; }
+[data-rte] .ql-editor { min-height: 170px; }
+[data-rte] .ql-editor[dir=rtl] { direction: rtl; text-align: right; font-family: 'Segoe UI', Tahoma, sans-serif; }

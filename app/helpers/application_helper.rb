@@ -11,7 +11,7 @@ module ApplicationHelper
   CLINIC_MAP_LINK      = "https://www.google.com/maps?q=#{ERB::Util.url_encode(CLINIC_MAP_QUERY)}"
 
   # Tags the dashboard's rich-text content may use on public pages.
-  RICH_TAGS  = %w[h2 h3 h4 p ul ol li strong em b i u a br blockquote img span div].freeze
+  RICH_TAGS  = %w[h1 h2 h3 h4 p ul ol li strong em b i u a br blockquote img span div].freeze
   RICH_ATTRS = %w[href src alt title target rel].freeze
 
   def rtl?

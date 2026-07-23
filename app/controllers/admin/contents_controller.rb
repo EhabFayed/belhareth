@@ -37,8 +37,10 @@ module Admin
     end
 
     def content_params
+      # No per-block publish flag in the admin: blocks are always published;
+      # the parent blog/operation's own flag controls visibility.
       params.require(:content).permit(
-        :content_ar, :content_en, :is_published,
+        :content_ar, :content_en,
         content_photos_attributes: [:id, :alt_ar, :alt_en, :photo, :_destroy]
       )
     end

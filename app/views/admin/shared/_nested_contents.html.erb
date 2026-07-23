@@ -1,18 +1,17 @@
 <%# locals: parent — Blog or Operation %>
 <h2 class="adm-sub">Content blocks</h2>
-<p style="color:rgba(22,40,58,.55);margin:0 0 14px">Each block is one section of the page: text (basic HTML allowed — <code>&lt;h3&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;ul&gt;&lt;li&gt;</code>, <code>&lt;strong&gt;</code>) plus optional photos shown under the text.</p>
+<p style="color:rgba(22,40,58,.55);margin:0 0 14px">Each block is one section of the page: formatted text (use the editor toolbar for headings, bold, lists and links) plus optional photos shown under the text.</p>
 
 <% parent.contents.where(is_deleted: false).order(:id).each do |content| %>
   <details class="adm-acc">
     <summary>
       <span><%= strip_tags(content.content_en.to_s).truncate(80) %><% if content.content_photos.any? %> <span style="color:#1273BF">📷 <%= content.content_photos.size %></span><% end %></span>
-      <span class="badge <%= content.is_published ? 'pub' : 'draft' %>"><%= content.is_published ? 'Published' : 'Draft' %></span>
     </summary>
     <div>
       <%= form_with model: [:admin, parent, content], class: "adm" do |f| %>
         <div class="row">
-          <div><label>Content (English HTML)</label><%= f.text_area :content_en, rows: 8 %></div>
-          <div><label>Content (Arabic HTML)</label><%= f.text_area :content_ar, rows: 8, dir: "rtl", class: "ar" %></div>
+          <%= render "admin/shared/rte", f: f, attr: :content_en, label: "Content (English)", dir: "ltr", value: content.content_en %>
+          <%= render "admin/shared/rte", f: f, attr: :content_ar, label: "Content (Arabic)", dir: "rtl", value: content.content_ar %>
         </div>
 
         <label style="margin-top:6px">Photos in this block</label>
@@ -34,10 +33,7 @@
           </div>
         <% end %>
 
-        <div class="row">
-          <div class="check"><%= f.check_box :is_published %> <label style="margin:0;text-transform:none">Published</label></div>
-        </div>
-        <div class="inline-actions">
+        <div class="inline-actions" style="margin-top:12px">
           <%= f.submit "Save block", class: "btn sm" %>
         </div>
       <% end %>
@@ -51,8 +47,8 @@
   <div>
     <%= form_with model: [:admin, parent, Content.new], class: "adm" do |f| %>
       <div class="row">
-        <div><label>Content (English HTML)</label><%= f.text_area :content_en, rows: 8 %></div>
-        <div><label>Content (Arabic HTML)</label><%= f.text_area :content_ar, rows: 8, dir: "rtl", class: "ar" %></div>
+        <%= render "admin/shared/rte", f: f, attr: :content_en, label: "Content (English)", dir: "ltr", value: "" %>
+        <%= render "admin/shared/rte", f: f, attr: :content_ar, label: "Content (Arabic)", dir: "rtl", value: "" %>
       </div>
       <%= f.fields_for :content_photos, ContentPhoto.new do |pf| %>
         <div class="photo-row">
@@ -61,10 +57,7 @@
           <div><label>Alt (AR)</label><%= pf.text_field :alt_ar, dir: "rtl", class: "ar" %></div>
         </div>
       <% end %>
-      <div class="row">
-        <div class="check"><%= f.check_box :is_published, {}, "true", "false" %> <label style="margin:0;text-transform:none">Publish immediately</label></div>
-      </div>
-      <%= f.submit "Add block", class: "btn sm" %>
+      <%= f.submit "Add block", class: "btn sm", style: "margin-top:12px" %>
     <% end %>
   </div>
 </details>
