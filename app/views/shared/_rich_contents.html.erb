@@ -1,0 +1,21 @@
+<%# locals: contents — published Content records rendered as styled blocks;
+    each block shows its text, then its photos (2-up grid when several),
+    same structure the elmunifi blog pages use. %>
+<% contents.each do |content| %>
+  <% photos = content.content_photos.select { |cp| cp.photo.attached? } %>
+  <div class="rv sec-pad" style="padding:0 48px 56px">
+    <div class="rich" style="border:1px solid rgba(22,40,58,.1);border-radius:18px;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);padding:40px 44px;max-width:980px">
+      <%= rich(loc(content, :content)) %>
+      <% if photos.any? %>
+        <div class="m1" style="display:grid;grid-template-columns:<%= photos.size > 1 ? '1fr 1fr' : '1fr' %>;gap:16px;margin-top:24px">
+          <% photos.each do |cp| %>
+            <figure style="margin:0">
+              <img src="<%= url_for(cp.photo) %>" alt="<%= loc(cp, :alt) %>" style="width:100%;height:<%= photos.size > 1 ? '280px' : 'auto' %>;max-height:460px;object-fit:cover;border-radius:14px">
+              <% if loc(cp, :alt).present? %><figcaption style="margin-top:8px;font-size:12.5px;color:rgba(22,40,58,.5)"><%= loc(cp, :alt) %></figcaption><% end %>
+            </figure>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

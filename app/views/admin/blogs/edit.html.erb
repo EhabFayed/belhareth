@@ -1,0 +1,12 @@
+<% content_for :title, "Edit blog" %>
+<div class="adm-head">
+  <h1 class="adm-title">Edit blog</h1>
+  <div class="inline-actions">
+    <% if @blog.is_published %><a href="<%= article_path(@blog.slug) %>" target="_blank">View on site ↗</a><% end %>
+    <a href="<%= admin_blogs_path %>">← All blogs</a>
+  </div>
+</div>
+<%= render "form", blog: @blog %>
+
+<%= render "admin/shared/nested_contents", parent: @blog %>
+<%= render "admin/shared/nested_faqs", parent: @blog %>

@@ -77,3 +77,45 @@ details.faq-d:hover{border-color:rgba(18,115,191,.4)!important;box-shadow:0 6px 
 @media (max-width:640px){
   .m2{grid-template-columns:1fr!important}
 }
+
+/* ── rich text blocks (dashboard-managed content) ─────────────────────── */
+.rich h2, .rich h3, .rich h4 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin: 0 0 16px;
+  color: #16283A;
+}
+.rich h2 { font-size: 30px; }
+.rich h3 { font-size: 24px; }
+.rich h4 { font-size: 16px; letter-spacing: .08em; color: #1273BF; margin-top: 26px; }
+.rich p { margin: 0 0 16px; font-size: 16px; line-height: 1.75; color: rgba(22,40,58,.75); }
+.rich p:last-child { margin-bottom: 0; }
+.rich ul, .rich ol { margin: 0 0 16px; padding-left: 24px; }
+.rich li { font-size: 15.5px; line-height: 1.7; color: rgba(22,40,58,.75); margin-bottom: 10px; }
+.rich li::marker { color: #1273BF; }
+.rich a { color: #1273BF; text-decoration: underline; }
+.rich blockquote { border-left: 3px solid #1273BF; margin: 0 0 16px; padding: 6px 0 6px 20px; color: rgba(22,40,58,.7); }
+.rich img { max-width: 100%; border-radius: 14px; }
+
+/* article category chips */
+.chip { padding: 9px 20px; border-radius: 999px; border: 1px solid rgba(22,40,58,.2); color: rgba(22,40,58,.7); transition: border-color .3s, color .3s; }
+.chip:hover { border-color: #1273BF; color: #1273BF; }
+.chip-on { background: #1273BF; border-color: #1273BF; color: #fff; }
+.chip-on:hover { color: #fff; }
+
+/* ── RTL / Arabic ─────────────────────────────────────────────────────── */
+[dir=rtl] body, [dir=rtl] * { letter-spacing: 0 !important; }
+[dir=rtl] *:not(svg):not(path) { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif !important; }
+[dir=rtl] h1, [dir=rtl] h2, [dir=rtl] h3 { line-height: 1.35 !important; text-transform: none !important; }
+[dir=rtl] .nav-link::after { left: auto; right: 0; left: 100%; }
+[dir=rtl] .nav-link:hover::after, [dir=rtl] .nav-link.nav-on::after { left: 0; right: 0; }
+[dir=rtl] .rich ul, [dir=rtl] .rich ol { padding-left: 0; padding-right: 24px; }
+[dir=rtl] .rich blockquote { border-left: none; border-right: 3px solid #1273BF; padding: 6px 20px 6px 0; }
+.lang-switch:hover { background: #1273BF; color: #fff !important; }
+
+/* flash toast */
+.toast { position: fixed; top: 84px; left: 50%; transform: translate(-50%, -16px); z-index: 90; background: #12703D; color: #fff; padding: 14px 26px; border-radius: 999px; font-size: 14px; font-weight: 600; box-shadow: 0 14px 40px rgba(0,0,0,.22); opacity: 0; pointer-events: none; transition: opacity .4s ease, transform .4s ease; max-width: min(92vw, 640px); text-align: center; }
+.toast.toast-err { background: #A02020; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }

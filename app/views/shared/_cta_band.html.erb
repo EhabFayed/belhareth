@@ -2,9 +2,9 @@
 <div style="border-top:1px solid rgba(22,40,58,.12);padding:72px 48px;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap" class="sec-pad">
   <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(28px,3.2vw,40px);line-height:1;text-transform:uppercase"><%= headline_html %></h2>
   <div style="display:flex;flex-wrap:wrap;gap:14px;flex:none">
-    <a href="<%= contact_path %>" class="btn-blue" style="padding:18px 38px;border-radius:999px;background:#1273BF;color:#fff;font-size:14px;font-weight:700;letter-spacing:.08em;transition:background .3s">BOOK AN APPOINTMENT</a>
+    <a href="<%= contact_path %>" class="btn-blue" style="padding:18px 38px;border-radius:999px;background:#1273BF;color:#fff;font-size:14px;font-weight:700;letter-spacing:.08em;transition:background .3s"><%= t("common.book_appointment") %></a>
     <% if local_assigns.fetch(:whatsapp, false) %>
-      <a href="<%= ApplicationHelper::CLINIC_WHATSAPP_URL %>" target="_blank" rel="noopener" style="padding:18px 38px;border-radius:999px;background:#25D366;color:#0B1A12;font-size:14px;font-weight:700;letter-spacing:.08em;animation:pulseRing 2.4s infinite">WHATSAPP ↗</a>
+      <a href="<%= ApplicationHelper::CLINIC_WHATSAPP_URL %>" target="_blank" rel="noopener" style="padding:18px 38px;border-radius:999px;background:#25D366;color:#0B1A12;font-size:14px;font-weight:700;letter-spacing:.08em;animation:pulseRing 2.4s infinite"><%= t("common.whatsapp") %></a>
     <% end %>
   </div>
 </div>

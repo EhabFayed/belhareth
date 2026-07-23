@@ -1,38 +1,40 @@
 <div style="background:#0F2436;color:rgba(255,255,255,.75)">
-  <div style="padding:72px 48px 56px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.2fr);gap:56px">
+  <div class="m1 sec-pad" style="padding:72px 48px 56px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.2fr);gap:56px">
     <div style="display:flex;flex-direction:column;gap:18px">
       <a href="<%= root_path %>" style="display:flex;align-items:center;gap:14px">
         <span style="width:48px;height:48px;border-radius:14px;background:#1273BF;display:flex;align-items:center;justify-content:center;flex:none"><svg width="26" height="22" viewBox="0 0 64 22"><path d="M2 11 H14 L19 3 L25 19 L30 11 H62" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
         <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:20px;letter-spacing:.04em;color:#fff">BALHARETH<span style="color:#6FB4E4">.</span>ORTHO</span>
       </a>
-      <p style="margin:0;font-size:14px;line-height:1.7;color:rgba(255,255,255,.6);max-width:340px">Dr. Mohammed Ali Balhareth — consultant orthopedic surgeon specializing in hip &amp; knee replacement, reconstruction, and trauma surgery in Riyadh.</p>
-      <a href="<%= ApplicationHelper::CLINIC_WHATSAPP_URL %>" target="_blank" rel="noopener" class="lift-2" style="align-self:flex-start;display:flex;align-items:center;gap:10px;background:#25D366;color:#0B1A12;border-radius:999px;padding:12px 24px;font-size:13px;font-weight:700;letter-spacing:.06em;transition:transform .3s">WHATSAPP THE CLINIC ↗</a>
+      <p style="margin:0;font-size:14px;line-height:1.7;color:rgba(255,255,255,.6);max-width:340px"><%= t("footer.tagline") %></p>
+      <a href="<%= ApplicationHelper::CLINIC_WHATSAPP_URL %>" target="_blank" rel="noopener" class="lift-2" style="align-self:flex-start;display:flex;align-items:center;gap:10px;background:#25D366;color:#0B1A12;border-radius:999px;padding:12px 24px;font-size:13px;font-weight:700;letter-spacing:.06em;transition:transform .3s"><%= t("common.whatsapp_clinic") %></a>
     </div>
     <div style="display:flex;flex-direction:column;gap:14px">
-      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:13px;letter-spacing:.18em;color:#fff;margin-bottom:6px">SITE</div>
-      <a href="<%= root_path %>" class="flink" style="font-size:14px;transition:color .3s">Home</a>
-      <a href="<%= about_path %>" class="flink" style="font-size:14px;transition:color .3s">About the doctor</a>
-      <a href="<%= specialties_path %>" class="flink" style="font-size:14px;transition:color .3s">Specialties &amp; services</a>
-      <a href="<%= faq_path %>" class="flink" style="font-size:14px;transition:color .3s">Frequently asked questions</a>
-      <a href="<%= contact_path %>" class="flink" style="font-size:14px;transition:color .3s">Contact &amp; booking</a>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:13px;letter-spacing:.18em;color:#fff;margin-bottom:6px"><%= t("footer.site") %></div>
+      <a href="<%= root_path %>" class="flink" style="font-size:14px;transition:color .3s"><%= t("footer.home") %></a>
+      <a href="<%= about_path %>" class="flink" style="font-size:14px;transition:color .3s"><%= t("footer.about") %></a>
+      <a href="<%= specialties_path %>" class="flink" style="font-size:14px;transition:color .3s"><%= t("footer.specialties_link") %></a>
+      <% if show_articles_nav? %>
+        <a href="<%= articles_path %>" class="flink" style="font-size:14px;transition:color .3s"><%= t("footer.articles_link") %></a>
+      <% end %>
+      <a href="<%= faq_path %>" class="flink" style="font-size:14px;transition:color .3s"><%= t("footer.faq_link") %></a>
+      <a href="<%= contact_path %>" class="flink" style="font-size:14px;transition:color .3s"><%= t("footer.contact_link") %></a>
     </div>
     <div style="display:flex;flex-direction:column;gap:14px">
-      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:13px;letter-spacing:.18em;color:#fff;margin-bottom:6px">SPECIALTIES</div>
-      <a href="<%= specialty_path('knee') %>" class="flink" style="font-size:14px;transition:color .3s">Knee osteoarthritis</a>
-      <a href="<%= specialty_path('hip') %>" class="flink" style="font-size:14px;transition:color .3s">Hip osteoarthritis</a>
-      <a href="<%= specialty_path('trauma') %>" class="flink" style="font-size:14px;transition:color .3s">Fractures &amp; trauma</a>
-      <a href="<%= specialty_path('complex') %>" class="flink" style="font-size:14px;transition:color .3s">DDH &amp; sickle-cell hip</a>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:13px;letter-spacing:.18em;color:#fff;margin-bottom:6px"><%= t("footer.specialties") %></div>
+      <% Operation.published.reorder(:id).each do |operation| %>
+        <a href="<%= specialty_path(loc_slug(operation)) %>" class="flink" style="font-size:14px;transition:color .3s"><%= loc(operation, :title) %></a>
+      <% end %>
     </div>
     <div style="display:flex;flex-direction:column;gap:16px">
-      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:13px;letter-spacing:.18em;color:#fff;margin-bottom:4px">CONTACT US</div>
-      <div style="display:flex;gap:12px;align-items:flex-start"><span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px">📍</span><span style="font-size:14px;line-height:1.6">Riyadh, Saudi Arabia<br>Dr. Sulaiman Al Habib Medical Group — Al Hamra Hospital</span></div>
-      <div style="display:flex;gap:12px;align-items:center"><span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px">📞</span><a href="<%= ApplicationHelper::CLINIC_PHONE_TEL %>" class="flink" style="font-size:14px;transition:color .3s"><%= ApplicationHelper::CLINIC_PHONE_DISPLAY %></a></div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:13px;letter-spacing:.18em;color:#fff;margin-bottom:4px"><%= t("footer.contact_us") %></div>
+      <div style="display:flex;gap:12px;align-items:flex-start"><span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px">📍</span><span style="font-size:14px;line-height:1.6"><%= t("footer.location_html") %></span></div>
+      <div style="display:flex;gap:12px;align-items:center"><span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px">📞</span><a href="<%= ApplicationHelper::CLINIC_PHONE_TEL %>" class="flink" style="font-size:14px;transition:color .3s;direction:ltr;unicode-bidi:embed"><%= ApplicationHelper::CLINIC_PHONE_DISPLAY %></a></div>
       <div style="display:flex;gap:12px;align-items:center"><span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px">✉️</span><a href="mailto:<%= ApplicationHelper::CLINIC_EMAIL %>" class="flink" style="font-size:14px;transition:color .3s"><%= ApplicationHelper::CLINIC_EMAIL %></a></div>
-      <div style="display:flex;gap:12px;align-items:flex-start"><span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px">🕐</span><span style="font-size:14px;line-height:1.6">Sat · 9:00 AM–12:00 PM<br>Sun, Tue, Wed · 4:00–8:00 PM</span></div>
+      <div style="display:flex;gap:12px;align-items:flex-start"><span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px">🕐</span><span style="font-size:14px;line-height:1.6"><%= t("footer.hours_html") %></span></div>
     </div>
   </div>
   <div style="border-top:1px solid rgba(255,255,255,.12);padding:20px 48px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:12.5px;letter-spacing:.08em;color:rgba(255,255,255,.5)">
-    <span>© <%= Date.current.year %> DR. MOHAMMED ALI BALHARETH · ALL RIGHTS RESERVED</span>
-    <a href="<%= contact_path %>" class="flink" style="transition:color .3s">Book an appointment</a>
+    <span><%= t("footer.rights", year: Date.current.year) %></span>
+    <a href="<%= contact_path %>" class="flink" style="transition:color .3s"><%= t("footer.book") %></a>
   </div>
 </div>

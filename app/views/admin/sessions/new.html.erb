@@ -1,0 +1,18 @@
+<div class="login-card">
+  <h1>BALHARETH<span style="color:#1273BF">.</span>ORTHO — Admin</h1>
+  <%= form_with url: admin_login_path, method: :post, class: "adm" do %>
+    <div class="row single">
+      <div>
+        <label>Email</label>
+        <input type="email" name="email" required autofocus autocomplete="email">
+      </div>
+    </div>
+    <div class="row single">
+      <div>
+        <label>Password</label>
+        <input type="password" name="password" required autocomplete="current-password">
+      </div>
+    </div>
+    <button class="btn" style="width:100%">SIGN IN</button>
+  <% end %>
+</div>

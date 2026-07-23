@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title><%= content_for(:title).presence || "Admin" %> · Balhareth Ortho</title>
+  <%= csrf_meta_tags %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/vendor/quill.snow.css">
+  <link rel="stylesheet" href="/admin.css">
+  <script src="/vendor/quill.js" defer></script>
+  <script src="/admin.js" defer></script>
+</head>
+<body>
+<% if current_admin %>
+<div class="adm-shell">
+  <aside class="adm-side">
+    <div class="adm-logo">BALHARETH<span>.</span>ORTHO</div>
+    <nav>
+      <a href="<%= admin_root_path %>" class="<%= 'on' if controller_name == 'dashboard' %>">Overview</a>
+      <a href="<%= admin_blogs_path %>" class="<%= 'on' if controller_name == 'blogs' %>">Blogs</a>
+      <a href="<%= admin_operations_path %>" class="<%= 'on' if controller_name == 'operations' %>">Operations</a>
+      <a href="<%= admin_faqs_path %>" class="<%= 'on' if controller_name == 'faqs' %>">FAQs</a>
+      <a href="<%= admin_inquiries_path %>" class="<%= 'on' if controller_name == 'inquiries' %>">Requests<% c = Inquiry.unhandled.count; %><% if c.positive? %> <span style="background:#E4F0F9;color:#1273BF;border-radius:999px;padding:1px 8px;font-size:11px"><%= c %></span><% end %></a>
+    </nav>
+    <div class="adm-side-foot">
+      <div class="adm-user"><%= current_admin.name %></div>
+      <%= button_to "Sign out", admin_logout_path, method: :delete, class: "adm-linkbtn" %>
+      <a href="<%= root_path %>" target="_blank">View site ↗</a>
+    </div>
+  </aside>
+  <main class="adm-main">
+    <% if notice %><div class="adm-flash ok"><%= notice %></div><% end %>
+    <% if alert %><div class="adm-flash err"><%= alert %></div><% end %>
+    <%= yield %>
+  </main>
+</div>
+<% else %>
+<main class="adm-login-wrap">
+  <% if notice %><div class="adm-flash ok"><%= notice %></div><% end %>
+  <% if alert %><div class="adm-flash err"><%= alert %></div><% end %>
+  <%= yield %>
+</main>
+<% end %>
+</body>
+</html>

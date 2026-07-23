@@ -26,5 +26,8 @@ module App
 
     # Full app: the public site is server-rendered HTML.
     config.api_only = false
+
+    # Background jobs (mailer deliveries) run on the sidekiq container.
+    config.active_job.queue_adapter = :sidekiq
   end
 end

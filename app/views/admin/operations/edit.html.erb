@@ -1,0 +1,12 @@
+<% content_for :title, "Edit operation" %>
+<div class="adm-head">
+  <h1 class="adm-title">Edit operation</h1>
+  <div class="inline-actions">
+    <% if @operation.is_published %><a href="<%= specialty_path(@operation.slug) %>" target="_blank">View on site ↗</a><% end %>
+    <a href="<%= admin_operations_path %>">← All operations</a>
+  </div>
+</div>
+<%= render "form", operation: @operation %>
+
+<%= render "admin/shared/nested_contents", parent: @operation %>
+<%= render "admin/shared/nested_faqs", parent: @operation %>

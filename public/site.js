@@ -11,11 +11,11 @@
     setTimeout(function () { el.classList.add('hide'); }, 2000);
   }
 
-  // Rotating hero word.
+  // Rotating hero word (word list is locale-dependent, provided via data-words).
   function heroWord() {
     var el = document.getElementById('hero-word');
     if (!el) return;
-    var words = ['walking', 'working', 'playing', 'praying', 'living'];
+    var words = (el.dataset.words || 'walking|working|playing|praying|living').split('|');
     var i = Math.max(0, words.indexOf(el.textContent.trim()));
     setInterval(function () {
       el.classList.add('out');
@@ -78,22 +78,12 @@
     onScroll();
   }
 
-  // Booking form: no backend yet — compose a WhatsApp message to the clinic.
-  function bookingForms() {
-    var WA = 'https://wa.me/966583777871';
-    document.querySelectorAll('[data-booking-form]').forEach(function (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var v = function (n) { var f = form.elements[n]; return f && f.value && f.value.indexOf('WHAT BRINGS') === -1 ? f.value.trim() : ''; };
-        var lines = ['Appointment request from the website:'];
-        if (v('name'))  lines.push('Name: ' + v('name'));
-        if (v('phone')) lines.push('Mobile: ' + v('phone'));
-        if (v('reason')) lines.push('Reason: ' + v('reason'));
-        if (v('day'))   lines.push('Preferred day: ' + v('day'));
-        if (v('notes')) lines.push('Notes: ' + v('notes'));
-        window.open(WA + '?text=' + encodeURIComponent(lines.join('\n')), '_blank');
-      });
-    });
+  // Flash toast: slide in, auto-hide.
+  function toast() {
+    var el = document.getElementById('site-toast');
+    if (!el) return;
+    setTimeout(function () { el.classList.add('show'); }, 150);
+    setTimeout(function () { el.classList.remove('show'); }, 6500);
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -102,6 +92,6 @@
     stats();
     reveals();
     navShadow();
-    bookingForms();
+    toast();
   });
 })();

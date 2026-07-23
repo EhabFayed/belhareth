@@ -1,0 +1,27 @@
+<% content_for :title, "Operations" %>
+<div class="adm-head">
+  <h1 class="adm-title">Operations (specialties)</h1>
+  <a href="<%= new_admin_operation_path %>" class="btn">+ New operation</a>
+</div>
+
+<table class="adm">
+  <tr><th>Title</th><th>Category</th><th>Slug</th><th>Status</th><th></th></tr>
+  <% @operations.each do |operation| %>
+  <tr>
+    <td><b><%= operation.title_en %></b><br><span class="ar" style="color:rgba(22,40,58,.55)"><%= operation.title_ar %></span></td>
+    <td><%= operation.category&.text %></td>
+    <td><code><%= operation.slug %></code></td>
+    <td><span class="badge <%= operation.is_published ? 'pub' : 'draft' %>"><%= operation.is_published ? 'Published' : 'Draft' %></span></td>
+    <td class="inline-actions">
+      <a href="<%= edit_admin_operation_path(operation) %>" class="btn sm ghost">Edit</a>
+      <% if operation.is_published %>
+        <a href="<%= specialty_path(operation.slug) %>" target="_blank">View ↗</a>
+      <% end %>
+      <%= button_to "Delete", admin_operation_path(operation), method: :delete, form: { onsubmit: "return confirm('Delete this operation?')" }, class: "btn sm danger" %>
+    </td>
+  </tr>
+  <% end %>
+  <% if @operations.empty? %>
+  <tr><td colspan="5" style="text-align:center;color:rgba(22,40,58,.5);padding:34px">No operations yet — create the first one.</td></tr>
+  <% end %>
+</table>
