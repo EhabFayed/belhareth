@@ -25,6 +25,7 @@
       <a href="<%= admin_operations_path %>" class="<%= 'on' if controller_name == 'operations' %>">Operations</a>
       <a href="<%= admin_faqs_path %>" class="<%= 'on' if controller_name == 'faqs' %>">FAQs</a>
       <a href="<%= admin_inquiries_path %>" class="<%= 'on' if controller_name == 'inquiries' %>">Requests<% c = Inquiry.unhandled.count; %><% if c.positive? %> <span style="background:#E4F0F9;color:#1273BF;border-radius:999px;padding:1px 8px;font-size:11px"><%= c %></span><% end %></a>
+      <a href="<%= admin_users_path %>" class="<%= 'on' if controller_name == 'users' %>">Users<% p = User.pending.count %><% if p.positive? %> <span style="background:#F5B942;color:#4a3200;border-radius:999px;padding:1px 8px;font-size:11px"><%= p %></span><% end %></a>
     </nav>
     <div class="adm-side-foot">
       <div class="adm-user"><%= current_admin.name %></div>

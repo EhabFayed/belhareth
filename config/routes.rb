@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     root "dashboard#index"
     get    "login",  to: "sessions#new"
     post   "login",  to: "sessions#create"
+    get    "signup", to: "sessions#signup"
+    post   "signup", to: "sessions#register"
     delete "logout", to: "sessions#destroy"
 
     resources :blogs, except: [:show] do
@@ -37,6 +39,9 @@ Rails.application.routes.draw do
     end
     resources :faqs, only: [:index, :create, :update, :destroy]
     resources :inquiries, only: [:index, :update, :destroy]
+    resources :users, only: [:index, :create, :destroy] do
+      member { patch :approve }
+    end
   end
 
   # ── JSON API for the milaknights dashboard frontend (same as dr_elmunify) ─

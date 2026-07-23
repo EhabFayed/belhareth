@@ -7,7 +7,7 @@ module Admin
     helper_method :current_admin
 
     def current_admin
-      @current_admin ||= User.find_by(id: session[:admin_user_id])
+      @current_admin ||= User.approved.find_by(id: session[:admin_user_id])
     end
 
     private

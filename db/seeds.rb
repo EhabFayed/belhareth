@@ -6,6 +6,7 @@
 admin = User.find_or_create_by!(email: "admin@milaknights.com") do |u|
   u.name = "Milaknights Admin"
   u.password = ENV.fetch("ADMIN_PASSWORD", "balhareth123")
+  u.approved = true
 end
 puts "Admin user: #{admin.email}"
 
