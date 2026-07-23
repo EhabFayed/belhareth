@@ -10,6 +10,19 @@ admin = User.find_or_create_by!(email: "admin@milaknights.com") do |u|
 end
 puts "Admin user: #{admin.email}"
 
+# When a content dump exported from dev exists (db/content_seed/, created by
+# `bin/rails content:export`), it is the source of truth and wins over the
+# built-in content below — same convention as neuskin's content:seed.
+if ContentSync.dump_exists?
+  puts "Importing content from db/content_seed/ (exported #{JSON.parse(ContentSync::JSON_PATH.read)['exported_at']})..."
+  data = ContentSync.import!(user: admin)
+  puts "Imported: #{data['operations'].size} operations, #{data['blogs'].size} blogs, #{data['global_faqs'].size} global FAQs."
+  puts "Seed complete (from dump): #{Operation.count} operations, #{Faq.count} FAQs, #{Blog.count} blogs (#{Blog.published.count} published)."
+  SKIP_BUILTIN_CONTENT = true
+else
+  SKIP_BUILTIN_CONTENT = false
+end
+
 def attach_photo(record, file)
   path = Rails.root.join("public", "images", file)
   return unless File.exist?(path)
@@ -177,6 +190,7 @@ OPERATIONS = [
 ].freeze
 
 OPERATIONS.each do |data|
+  next if SKIP_BUILTIN_CONTENT
   operation = Operation.find_by(slug: data[:slug])
   if operation.nil?
     operation = Operation.create!(
@@ -260,6 +274,7 @@ GLOBAL_FAQS = [
 ].freeze
 
 GLOBAL_FAQS.each do |q_en, a_en, q_ar, a_ar|
+  next if SKIP_BUILTIN_CONTENT
   next if Faq.global.exists?(question_en: q_en)
 
   Faq.create!(question_en: q_en, answer_en: a_en, question_ar: q_ar, answer_ar: a_ar,
@@ -291,6 +306,7 @@ DRAFT_BLOGS = [
 ].freeze
 
 DRAFT_BLOGS.each do |slug, slug_ar, category, title_en, title_ar, desc_en, desc_ar, photo_file|
+  next if SKIP_BUILTIN_CONTENT
   next if Blog.exists?(slug: slug)
 
   blog = Blog.create!(
