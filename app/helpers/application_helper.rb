@@ -1,8 +1,8 @@
 module ApplicationHelper
   # Clinic facts (from the approved content document) — single source of truth.
-  CLINIC_PHONE_DISPLAY = "+966 58 377 7871"
-  CLINIC_PHONE_TEL     = "tel:+966583777871"
-  CLINIC_WHATSAPP_URL  = "https://wa.me/966583777871"
+  CLINIC_PHONE_DISPLAY = "+966 0507964030"
+  CLINIC_PHONE_TEL     = "tel:+9660507964030"
+  CLINIC_WHATSAPP_URL  = "https://wa.me/9660507964030"
   CLINIC_EMAIL         = "dr.balhareth@hotmail.com"
   CLINIC_HOURS_SHORT   = "Sat 9:00 AM–12:00 PM · Sun, Tue, Wed 4:00–8:00 PM"
   CLINIC_LOCATION      = "Riyadh, Saudi Arabia — Dr. Sulaiman Al Habib Medical Group, Al Hamra Hospital"
