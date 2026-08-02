@@ -117,7 +117,7 @@ class SitePagesTest < ActionDispatch::IntegrationTest
   test "contact renders real clinic details" do
     get contact_path
     assert_response :success
-    assert_includes response.body, "+966 58 377 7871"
+    assert_includes response.body, "+966 50 796 4030"
     assert_includes response.body, "dr.balhareth@hotmail.com"
   end
 

@@ -201,7 +201,7 @@ en:
     confirmation:
       subject: "We received your appointment request — Dr. Balhareth Clinic"
       greeting: "Dear %{name},"
-      body: "Thank you for contacting the clinic of Dr. Mohammed Ali Balhareth. We have received your appointment request, and our team will call you within one working day to confirm your time.\n\nIf your case is urgent, you can reach us directly on WhatsApp: +966 58 377 7871."
+      body: "Thank you for contacting the clinic of Dr. Mohammed Ali Balhareth. We have received your appointment request, and our team will call you within one working day to confirm your time.\n\nIf your case is urgent, you can reach us directly on WhatsApp: +966 050 796 4030."
     signature: "Dr. Mohammed Ali Balhareth Clinic — Dr. Sulaiman Al Habib Medical Group, Al Hamra Hospital, Riyadh"
   activerecord:
     errors:
