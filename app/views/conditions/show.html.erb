@@ -1,5 +1,7 @@
 <% content_for :title, (rtl? ? @operation.meta_title_ar.presence : @operation.meta_title_en.presence) || loc(@operation, :title) %>
 <% content_for :meta_description, (rtl? ? @operation.meta_description_ar.presence : @operation.meta_description_en.presence) || loc(@operation, :description) %>
+<% content_for :alternate_en, "#{request.base_url}/specialties/#{@operation.slug}" %>
+<% content_for :alternate_ar, "#{request.base_url}/ar/specialties/#{ERB::Util.url_encode(@operation.slug_ar.presence || @operation.slug)}" %>
 
 <div>
   <div class="sec-pad" style="padding:64px 48px 56px;background:radial-gradient(110% 85% at 88% 0%,#E4F0F9 0%,rgba(228,240,249,0) 58%),linear-gradient(180deg,#FDFEFF 0%,#F7FAFC 100%)">

@@ -1,5 +1,7 @@
 <% content_for :title, (rtl? ? @blog.meta_title_ar.presence : @blog.meta_title_en.presence) || loc(@blog, :title) %>
 <% content_for :meta_description, (rtl? ? @blog.meta_description_ar.presence : @blog.meta_description_en.presence) || loc(@blog, :description) %>
+<% content_for :alternate_en, "#{request.base_url}/articles/#{@blog.slug}" %>
+<% content_for :alternate_ar, "#{request.base_url}/ar/articles/#{ERB::Util.url_encode(@blog.slug_ar.presence || @blog.slug)}" %>
 
 <div>
   <div class="sec-pad" style="padding:64px 48px 56px;background:radial-gradient(110% 85% at 88% 0%,#E4F0F9 0%,rgba(228,240,249,0) 58%),linear-gradient(180deg,#FDFEFF 0%,#F7FAFC 100%)">
@@ -14,7 +16,7 @@
         <% if loc(@blog, :description).present? %>
           <p style="margin:0;font-size:17px;line-height:1.75;color:rgba(22,40,58,.72);max-width:560px"><%= loc(@blog, :description) %></p>
         <% end %>
-        <div style="font-size:12.5px;letter-spacing:.14em;color:rgba(22,40,58,.5)"><%= I18n.l(@blog.created_at.to_date, format: :long) rescue @blog.created_at.strftime("%Y-%m-%d") %> · <%= t("articles.by") %></div>
+        <div style="font-size:12.5px;letter-spacing:.14em;color:rgba(22,40,58,.5)"><%= I18n.l(@blog.created_at.to_date, format: :long) rescue @blog.created_at.strftime("%Y-%m-%d") %> · <a href="<%= about_path %>" class="link-blue" style="color:#1273BF;transition:color .3s"><%= t("articles.by") %></a></div>
       </div>
       <% if (photo_url = blog_photo_url(@blog)) %>
       <div style="width:100%;height:380px"><img class="slot" src="<%= photo_url %>" alt="<%= loc(@blog, :image_alt_text).presence || loc(@blog, :title) %>" style="border-radius:18px;height:380px"></div>

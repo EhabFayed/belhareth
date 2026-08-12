@@ -27,14 +27,13 @@
     </div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:13px;letter-spacing:.18em;color:#fff;margin-bottom:4px"><%= t("footer.contact_us") %></div>
-      <div style="display:flex;gap:12px;align-items:flex-start"><span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px">📍</span><span style="font-size:14px;line-height:1.6"><%= t("footer.location_html") %></span></div>
+      <a href="<%= ApplicationHelper::CLINIC_MAP_LINK %>" target="_blank" rel="noopener" class="flink" style="display:flex;gap:12px;align-items:flex-start;transition:color .3s"><span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px">📍</span><span style="font-size:14px;line-height:1.6"><%= t("footer.location_html") %></span></a>
       <div style="display:flex;gap:12px;align-items:center"><span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px">📞</span><a href="<%= ApplicationHelper::CLINIC_PHONE_TEL %>" class="flink" style="font-size:14px;transition:color .3s;direction:ltr;unicode-bidi:embed"><%= ApplicationHelper::CLINIC_PHONE_DISPLAY %></a></div>
       <div style="display:flex;gap:12px;align-items:center"><span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px">✉️</span><a href="mailto:<%= ApplicationHelper::CLINIC_EMAIL %>" class="flink" style="font-size:14px;transition:color .3s"><%= ApplicationHelper::CLINIC_EMAIL %></a></div>
       <div style="display:flex;gap:12px;align-items:flex-start"><span style="flex:none;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px">🕐</span><span style="font-size:14px;line-height:1.6"><%= t("footer.hours_html") %></span></div>
     </div>
   </div>
-  <div style="border-top:1px solid rgba(255,255,255,.12);padding:20px 48px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:12.5px;letter-spacing:.08em;color:rgba(255,255,255,.5)">
+  <div style="border-top:1px solid rgba(255,255,255,.12);padding:20px 48px;text-align:center;font-size:12.5px;letter-spacing:.08em;color:rgba(255,255,255,.5)">
     <span><%= t("footer.rights", year: Date.current.year) %></span>
-    <a href="<%= contact_path %>" class="flink" style="transition:color .3s"><%= t("footer.book") %></a>
   </div>
 </div>

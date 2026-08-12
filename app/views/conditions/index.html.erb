@@ -18,7 +18,7 @@
       <% else %>
         <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:26px;color:rgba(22,40,58,.35);padding:36px 36px 0"><%= format('%02d', i + 1) %></span>
       <% end %>
-      <div style="padding:28px 36px 36px"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:30px;text-transform:uppercase;margin-bottom:12px"><%= loc(operation, :title) %></div><div style="font-size:15px;line-height:1.65;color:rgba(22,40,58,.6)"><%= loc(operation, :description) %></div><div style="margin-top:20px;color:#1273BF;font-size:13px;letter-spacing:.12em"><%= t("common.read_guide") %></div></div>
+      <div style="padding:28px 36px 36px"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:30px;text-transform:uppercase;margin-bottom:12px"><%= loc(operation, :title) %></div><div style="font-size:15px;line-height:1.65;color:rgba(22,40,58,.6)"><%= loc(operation, :description).to_s.truncate(140) %></div><div style="margin-top:20px;color:#1273BF;font-size:13px;letter-spacing:.12em"><%= t("common.read_guide") %></div></div>
     </a>
     <% end %>
   </div>

@@ -61,7 +61,7 @@
   <div class="rv sec-pad" style="padding:26px 48px;display:flex;align-items:center;justify-content:center;gap:14px 56px;flex-wrap:wrap;border-top:1px solid rgba(22,40,58,.08);background:#FDFEFF">
     <span style="font-size:11px;letter-spacing:.2em;color:rgba(22,40,58,.45);flex:none"><%= t("home.certified") %></span>
     <% %w[cred1 cred2 cred3 cred4].each do |k| %>
-      <span style="display:flex;align-items:center;gap:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:rgba(22,40,58,.6)"><span style="width:30px;height:30px;border-radius:9px;background:#E4F0F9;display:flex;align-items:center;justify-content:center;color:#1273BF;font-size:13px">✚</span><%= t("home.#{k}") %></span>
+      <a href="<%= about_path %>" class="link-blue" style="display:flex;align-items:center;gap:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:rgba(22,40,58,.6);transition:color .3s"><span style="width:30px;height:30px;border-radius:9px;background:#E4F0F9;display:flex;align-items:center;justify-content:center;color:#1273BF;font-size:13px">✚</span><%= t("home.#{k}") %></a>
     <% end %>
   </div>
 
@@ -105,7 +105,7 @@
         <div style="position:absolute;left:0;right:0;bottom:0;padding:26px 26px 24px;color:#fff;pointer-events:none;display:flex;flex-direction:column;gap:10px">
           <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:15px;color:rgba(255,255,255,.55)"><%= format('%02d', i + 1) %></span>
           <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(15px,1.5vw,22px);line-height:1.1;text-transform:uppercase;overflow-wrap:anywhere"><%= loc(operation, :title) %></span>
-          <span style="font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.82)"><%= loc(operation, :description) %></span>
+          <span style="font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.82)"><%= loc(operation, :description).to_s.truncate(95) %></span>
           <span style="font-size:12px;letter-spacing:.14em;color:#8FC6EC;margin-top:4px"><%= t("common.read_guide") %></span>
         </div>
       </a>
@@ -134,12 +134,35 @@
       <% %w[j1 j2 j3 j4].each_with_index do |k, i| %>
       <div style="background:#F7FAFC;padding:28px 24px"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:30px;color:#1273BF;margin-bottom:14px"><%= i + 1 %></div><div style="font-weight:700;font-size:15px;letter-spacing:.04em;margin-bottom:8px"><%= t("home.#{k}") %></div><div style="font-size:13px;line-height:1.6;color:rgba(22,40,58,.55)"><%= t("home.#{k}_v") %></div></div>
       <% end %>
-      <div style="background:#1273BF;padding:28px 24px;color:#fff"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:30px;margin-bottom:14px">5</div><div style="font-weight:700;font-size:15px;letter-spacing:.04em;margin-bottom:8px"><%= t("home.j5") %></div><div style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.8)"><%= t("home.j5_v") %></div></div>
+      <div style="background:#F7FAFC;padding:28px 24px"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:30px;color:#1273BF;margin-bottom:14px">5</div><div style="font-weight:700;font-size:15px;letter-spacing:.04em;margin-bottom:8px"><%= t("home.j5") %></div><div style="font-size:13px;line-height:1.6;color:rgba(22,40,58,.55)"><%= t("home.j5_v") %></div></div>
     </div>
   </div>
 
   <%# Sections hidden at the client's request (July 2026):
       OUTCOMES — awaiting real, permission-cleared patient testimonials. %>
+
+  <!-- latest articles (shows once real articles are published) -->
+  <% if @latest_blogs.any? %>
+  <div class="rv sec-pad" style="padding:0 48px 88px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px">
+      <div style="font-size:12px;letter-spacing:.24em;color:#1273BF"><%= t("home.articles_label") %></div>
+      <a href="<%= articles_path %>" class="link-blue" style="font-size:13px;letter-spacing:.1em;color:rgba(22,40,58,.6);border-bottom:1px solid rgba(22,40,58,.3);padding-bottom:2px;transition:color .3s"><%= t("home.articles_all") %></a>
+    </div>
+    <div class="rv-kids m2" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <% @latest_blogs.each do |blog| %>
+      <a href="<%= article_path(loc_slug(blog)) %>" class="card-line" style="border:1px solid rgba(22,40,58,.1);border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);display:block;transition:border-color .3s,transform .3s">
+        <% if (photo_url = blog_photo_url(blog)) %>
+          <div style="height:150px"><img class="slot" src="<%= photo_url %>" alt="<%= loc(blog, :image_alt_text).presence || loc(blog, :title) %>" style="height:150px;border-radius:0"></div>
+        <% end %>
+        <div style="padding:22px 24px">
+          <div style="font-size:11.5px;letter-spacing:.18em;color:#1273BF;margin-bottom:10px"><%= blog.category ? t("articles.categories.#{blog.category}", default: blog.category.to_s.upcase) : t("articles.categories.general") %></div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:18px;line-height:1.35;color:#16283A"><%= loc(blog, :title) %></div>
+        </div>
+      </a>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
 
   <!-- booking CTA -->
   <div class="rv m1 sec-pad" style="border-top:1px solid rgba(22,40,58,.12);padding:88px 48px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;background:radial-gradient(110% 85% at 12% 100%,#E4F0F9 0%,rgba(228,240,249,0) 58%),linear-gradient(0deg,#FDFEFF 0%,#F7FAFC 100%)">
@@ -147,8 +170,8 @@
       <div style="font-size:12px;letter-spacing:.24em;color:#1273BF"><%= t("home.contact_label") %></div>
       <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(32px,4vw,52px);line-height:1;text-transform:uppercase"><%= t("home.contact_heading_html") %></h2>
       <div style="display:flex;flex-direction:column;gap:12px;font-size:15px;color:rgba(22,40,58,.75)">
-        <span><%= t("home.contact_location") %></span>
-        <span>📞 <span style="direction:ltr;unicode-bidi:embed"><%= ApplicationHelper::CLINIC_PHONE_DISPLAY %></span></span>
+        <a href="<%= ApplicationHelper::CLINIC_MAP_LINK %>" target="_blank" rel="noopener" class="link-blue" style="transition:color .3s"><%= t("home.contact_location") %></a>
+        <a href="<%= ApplicationHelper::CLINIC_WHATSAPP_URL %>" target="_blank" rel="noopener" class="link-blue" style="transition:color .3s">📞 <span style="direction:ltr;unicode-bidi:embed"><%= ApplicationHelper::CLINIC_PHONE_DISPLAY %></span></a>
         <span><%= t("home.contact_hours") %></span>
       </div>
       <a href="<%= ApplicationHelper::CLINIC_WHATSAPP_URL %>" target="_blank" rel="noopener" class="lift-2" style="align-self:flex-start;display:flex;align-items:center;gap:12px;background:#25D366;color:#0B1A12;border-radius:999px;padding:15px 30px;font-size:14px;font-weight:700;letter-spacing:.06em;animation:pulseRing 2.4s infinite;transition:transform .3s"><%= t("common.whatsapp_clinic") %></a>

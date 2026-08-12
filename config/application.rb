@@ -29,5 +29,9 @@ module App
 
     # Background jobs (mailer deliveries) run on the sidekiq container.
     config.active_job.queue_adapter = :sidekiq
+
+    # Serve ActiveStorage files directly (200 + long cache) instead of the
+    # default /blobs/redirect/... 302 to /disk/ — SEO audit requirement.
+    config.active_storage.resolve_model_to_route = :rails_storage_proxy
   end
 end

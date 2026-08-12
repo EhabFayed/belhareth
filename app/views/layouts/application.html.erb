@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><%= page_title %></title>
   <% if content_for?(:meta_description) %><meta name="description" content="<%= content_for(:meta_description) %>"><% end %>
-  <link rel="alternate" hreflang="en" href="<%= url_for(locale: nil, only_path: false) rescue request.original_url %>">
-  <link rel="alternate" hreflang="ar" href="<%= url_for(locale: :ar, only_path: false) rescue request.original_url %>">
+  <link rel="canonical" href="<%= canonical_url %>">
+  <link rel="alternate" hreflang="en" href="<%= alternate_url(:en) %>">
+  <link rel="alternate" hreflang="ar" href="<%= alternate_url(:ar) %>">
   <%= csrf_meta_tags %>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

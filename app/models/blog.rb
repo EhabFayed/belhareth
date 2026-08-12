@@ -12,6 +12,7 @@ class Blog < ApplicationRecord
     hip: 2,
     trauma: 3,
     recovery: 4,
+    complex: 6,
     general: 5
   }
 

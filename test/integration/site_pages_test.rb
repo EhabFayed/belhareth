@@ -91,8 +91,10 @@ class SitePagesTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "/rails/active_storage/"
     assert_includes response.body, "Checklist illustration"
 
-    # Arabic page shows the Arabic alt/caption
+    # Arabic page shows the Arabic alt/caption (EN slug 301s to the AR slug)
     get "/ar/articles/#{@blog.slug}"
+    assert_response :moved_permanently
+    follow_redirect!
     assert_response :success
     assert_includes response.body, "رسم توضيحي"
   end
@@ -154,13 +156,12 @@ class SitePagesTest < ActionDispatch::IntegrationTest
     assert_includes response.body, 'dir="rtl"'
     assert_includes response.body, "خشونة الركبة"
 
+    # EN slug under /ar 301s to the Arabic slug, which renders
     get "/ar/specialties/#{@operation.slug}"
+    assert_response :moved_permanently
+    follow_redirect!
     assert_response :success
     assert_includes response.body, "خشونة الركبة"
-
-    # Arabic slug resolves too
-    get "/ar/specialties/#{ERB::Util.url_encode(@operation.slug_ar)}"
-    assert_response :success
   end
 
   test "locale switcher links point to the same page in the other language" do
@@ -290,6 +291,33 @@ class SitePagesTest < ActionDispatch::IntegrationTest
                                                 password: "secret123", password_confirmation: "different" } }
       assert_response :unprocessable_entity
     end
+  end
+
+  test "seo: canonicals, sitemap, robots, slug 301s, proxy images" do
+    get root_path
+    assert_includes response.body, %(<link rel="canonical" href="http://www.example.com/">)
+
+    # filtered listing canonicalizes to the clean path
+    get "/articles?category=knee"
+    assert_includes response.body, %(<link rel="canonical" href="http://www.example.com/articles">)
+
+    # wrong-locale slug 301s to the locale-correct slug
+    get "/ar/specialties/#{@operation.slug}"
+    assert_response :moved_permanently
+    assert_includes response.location, ERB::Util.url_encode(@operation.slug_ar)
+    get "/specialties/#{ERB::Util.url_encode(@operation.slug_ar)}"
+    assert_response :moved_permanently
+    assert_includes response.location, "/specialties/#{@operation.slug}"
+
+    # article images serve via proxy, not redirect
+    get "/articles/#{@blog.slug}"
+    assert_includes response.body, "/rails/active_storage/blobs/proxy/"
+    assert_not_includes response.body, "/rails/active_storage/blobs/redirect/"
+
+    get "/sitemap.xml"
+    assert_response :success
+    assert_includes response.body, "/specialties/#{@operation.slug}</loc>"
+    assert_includes response.body, 'hreflang="ar"'
   end
 
   test "admin requires login and works with a session" do
