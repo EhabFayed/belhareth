@@ -1,8 +1,8 @@
 module ApplicationHelper
   # Clinic facts (from the approved content document) — single source of truth.
-  CLINIC_PHONE_DISPLAY = "+966 0507964030"
-  CLINIC_PHONE_TEL     = "tel:+9660507964030"
-  CLINIC_WHATSAPP_URL  = "https://wa.me/9660507964030"
+  CLINIC_PHONE_DISPLAY = "+966 50 796 4030"
+  CLINIC_PHONE_TEL     = "tel:+966507964030"
+  CLINIC_WHATSAPP_URL  = "https://wa.me/966507964030"
   CLINIC_EMAIL         = "dr.balhareth@hotmail.com"
   CLINIC_HOURS_SHORT   = "Sat 9:00 AM–12:00 PM · Sun, Tue, Wed 4:00–8:00 PM"
   CLINIC_LOCATION      = "Riyadh, Saudi Arabia — Dr. Sulaiman Al Habib Medical Group, Al Hamra Hospital"
@@ -39,6 +39,21 @@ module ApplicationHelper
     url_for(request.query_parameters.merge(locale: other, only_path: true))
   rescue ActionController::UrlGenerationError
     other ? "/#{other}" : "/"
+  end
+
+  # Self-canonical for every page: current path without query params (so
+  # /articles?category=knee canonicalizes to /articles). Slug pages override
+  # via content_for(:canonical) to always use the locale-correct slug.
+  def canonical_url
+    content_for(:canonical).presence || "#{request.base_url}#{request.path}"
+  end
+
+  def alternate_url(locale)
+    key = locale == :ar ? :alternate_ar : :alternate_en
+    return content_for(key) if content_for?(key)
+
+    path = request.path.sub(%r{\A/ar(?=/|\z)}, "")
+    locale == :ar ? "#{request.base_url}/ar#{path == '/' ? '' : path}" : "#{request.base_url}#{path.presence || '/'}"
   end
 
   def page_title

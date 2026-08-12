@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   def home
     @operations = Operation.published.reorder(:id).limit(4)
+    @latest_blogs = Blog.published.limit(3)
   end
 
   def about

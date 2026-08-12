@@ -1,1 +1,6 @@
-# See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+# dr-balharethclinic.com
+User-agent: *
+Allow: /
+Disallow: /admin
+
+Sitemap: https://dr-balharethclinic.com/sitemap.xml
