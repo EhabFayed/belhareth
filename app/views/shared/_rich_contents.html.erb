@@ -1,6 +1,7 @@
 <%# locals: contents — published Content records rendered as styled blocks;
     each block shows its text, then its photos (2-up grid when several),
-    same structure the elmunifi blog pages use. %>
+    same structure the elmunifi blog pages use. Photo alt text is kept on the
+    <img> for SEO/accessibility only — it is not shown as a visible caption. %>
 <% contents.each do |content| %>
   <% photos = content.content_photos.select { |cp| cp.photo.attached? } %>
   <div class="rv sec-pad" style="padding:0 48px 56px">
@@ -11,7 +12,6 @@
           <% photos.each do |cp| %>
             <figure style="margin:0">
               <img src="<%= url_for(cp.photo) %>" alt="<%= loc(cp, :alt) %>" style="width:100%;height:<%= photos.size > 1 ? '280px' : 'auto' %>;max-height:460px;object-fit:cover;border-radius:14px">
-              <% if loc(cp, :alt).present? %><figcaption style="margin-top:8px;font-size:12.5px;color:rgba(22,40,58,.5)"><%= loc(cp, :alt) %></figcaption><% end %>
             </figure>
           <% end %>
         </div>
