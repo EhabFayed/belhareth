@@ -72,6 +72,22 @@ module ApplicationHelper
   # them to regular spaces before sanitizing so the browser can wrap normally.
   NBSP_PATTERN = /&nbsp;|&#160;|&#xa0;|\u00A0/i
 
+  # Cache-busting version for the plain static files in public/ (this app has
+  # no asset pipeline). public/ is served with a one-year cache header, so an
+  # unversioned "/site.css" stays in returning visitors' browsers after a
+  # deploy and CSS/JS fixes never reach them. Appending a digest of the file
+  # contents changes the URL whenever the file itself changes, so a deploy is
+  # picked up immediately and unchanged files stay cached.
+  STATIC_ASSET_VERSIONS = Concurrent::Map.new
+
+  def static_asset(path)
+    version = STATIC_ASSET_VERSIONS.fetch_or_store(path) do
+      file = Rails.public_path.join(path.delete_prefix("/"))
+      File.exist?(file) ? Digest::SHA256.file(file).hexdigest[0, 10] : ""
+    end
+    version.empty? ? path : "#{path}?v=#{version}"
+  end
+
   def rich(html)
     sanitize(html.to_s.gsub(NBSP_PATTERN, " "), tags: RICH_TAGS, attributes: RICH_ATTRS)
   end
