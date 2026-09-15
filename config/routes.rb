@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "sitemap.xml", to: "sitemaps#show", defaults: { format: :xml }
+  get "robots.txt",  to: "robots#show",   defaults: { format: :text }
 
   # ── Public site (server-rendered; English at /, Arabic under /ar) ────────
   scope "(:locale)", locale: /ar/ do
