@@ -34,6 +34,7 @@ en:
     contact_us: "CONTACT US"
     location_html: "Riyadh, Saudi Arabia<br>Dr. Sulaiman Al Habib Medical Group — Al Hamra Hospital"
     hours_html: "Sat · 9:00 AM–12:00 PM<br>Sun, Tue, Wed · 4:00–8:00 PM"
+    follow: "FOLLOW THE DOCTOR"
     rights: "© %{year} DR. MOHAMMED ALI BALHARETH · ALL RIGHTS RESERVED"
     book: "Book an appointment"
   booking:
