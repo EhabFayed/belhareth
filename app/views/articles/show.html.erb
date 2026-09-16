@@ -19,7 +19,7 @@
         <div style="font-size:12.5px;letter-spacing:.14em;color:rgba(22,40,58,.5)"><%= I18n.l(@blog.created_at.to_date, format: :long) rescue @blog.created_at.strftime("%Y-%m-%d") %> · <a href="<%= about_path %>" class="link-blue" style="color:#1273BF;transition:color .3s"><%= t("articles.by") %></a></div>
       </div>
       <% if (photo_url = blog_photo_url(@blog)) %>
-      <div style="width:100%;height:380px"><img class="slot" src="<%= photo_url %>" alt="<%= loc(@blog, :image_alt_text).presence || loc(@blog, :title) %>" style="border-radius:18px;height:380px"></div>
+      <div style="width:100%;height:380px"><img class="slot" src="<%= photo_url %>" alt="<%= blog_photo_alt(@blog) %>" style="border-radius:18px;height:380px"></div>
       <% end %>
     </div>
   </div>

@@ -98,6 +98,10 @@ details.faq-d:hover{border-color:rgba(18,115,191,.4)!important;box-shadow:0 6px 
 .rich a { color: #1273BF; text-decoration: underline; }
 .rich blockquote { border-left: 3px solid #1273BF; margin: 0 0 16px; padding: 6px 0 6px 20px; color: rgba(22,40,58,.7); }
 .rich img { max-width: 100%; border-radius: 14px; }
+/* safety net: never let dashboard content force a horizontal scroll
+   (long URLs, unbroken strings, or stray non-breaking spaces) */
+.rich { min-width: 0; overflow-wrap: anywhere; word-break: break-word; }
+.rich * { white-space: normal; max-width: 100%; }
 
 /* article category chips */
 .chip { padding: 9px 20px; border-radius: 999px; border: 1px solid rgba(22,40,58,.2); color: rgba(22,40,58,.7); transition: border-color .3s, color .3s; }

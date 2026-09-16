@@ -75,8 +75,14 @@ module ApplicationHelper
     "nav-link#{' nav-on' if active}"
   end
 
+  # The dashboard editor (and text pasted into it from Word/Docs) often joins
+  # words with non-breaking spaces. A whole paragraph of them is one unbreakable
+  # line, so the page scrolls sideways (seen on the Arabic articles). Normalize
+  # them to regular spaces before sanitizing so the browser can wrap normally.
+  NBSP_PATTERN = /&nbsp;|&#160;|&#xa0;|\u00A0/i
+
   def rich(html)
-    sanitize(html.to_s, tags: RICH_TAGS, attributes: RICH_ATTRS)
+    sanitize(html.to_s.gsub(NBSP_PATTERN, " "), tags: RICH_TAGS, attributes: RICH_ATTRS)
   end
 
   def operation_photo_url(operation, landing: false)
@@ -85,9 +91,22 @@ module ApplicationHelper
     url_for(ph.photo) if ph
   end
 
+  # The dashboard stores up to two cover photos per article, one flagged
+  # `is_arabic`. Pick the one for the current locale, falling back to any
+  # attached photo so an article with a single image still shows it.
+  def blog_photo(blog)
+    photos = blog.blog_photos.select { |p| p.photo.attached? }
+    photos.detect { |p| p.is_arabic == rtl? } || photos.first
+  end
+
   def blog_photo_url(blog)
-    ph = blog.blog_photos.detect { |p| p.photo.attached? }
+    ph = blog_photo(blog)
     url_for(ph.photo) if ph
+  end
+
+  def blog_photo_alt(blog)
+    ph = blog_photo(blog)
+    (ph && loc(ph, :alt).presence) || loc(blog, :image_alt_text).presence || loc(blog, :title)
   end
 
   # Articles appear in the chrome only once real published posts exist
