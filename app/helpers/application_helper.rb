@@ -10,6 +10,15 @@ module ApplicationHelper
   CLINIC_MAP_EMBED     = "https://maps.google.com/maps?q=#{ERB::Util.url_encode(CLINIC_MAP_QUERY)}&z=15&hl=en&output=embed"
   CLINIC_MAP_LINK      = "https://www.google.com/maps?q=#{ERB::Util.url_encode(CLINIC_MAP_QUERY)}"
 
+  # The doctor's social profiles (shown in the footer and on the contact page).
+  SOCIAL_LINKS = {
+    instagram: "https://www.instagram.com/dr_balhareth123",
+    x:         "https://x.com/dr_balhareth123",
+    tiktok:    "https://www.tiktok.com/@dr_balhareth123",
+    snapchat:  "https://www.snapchat.com/add/dr_balhareth123",
+    facebook:  "https://www.facebook.com/share/19aMUYkkLE/"
+  }.freeze
+
   # Tags the dashboard's rich-text content may use on public pages.
   RICH_TAGS  = %w[h1 h2 h3 h4 p ul ol li strong em b i u a br blockquote img span div].freeze
   RICH_ATTRS = %w[href src alt title target rel].freeze

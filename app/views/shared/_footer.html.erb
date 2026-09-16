@@ -7,6 +7,10 @@
       </a>
       <p style="margin:0;font-size:14px;line-height:1.7;color:rgba(255,255,255,.6);max-width:340px"><%= t("footer.tagline") %></p>
       <a href="<%= ApplicationHelper::CLINIC_WHATSAPP_URL %>" target="_blank" rel="noopener" class="lift-2" style="align-self:flex-start;display:flex;align-items:center;gap:10px;background:#25D366;color:#0B1A12;border-radius:999px;padding:12px 24px;font-size:13px;font-weight:700;letter-spacing:.06em;transition:transform .3s"><%= t("common.whatsapp_clinic") %></a>
+      <div style="margin-top:6px">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:12px;letter-spacing:.18em;color:#fff;margin-bottom:12px"><%= t("footer.follow") %></div>
+        <%= render "shared/social_links", dark: true %>
+      </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:14px">
       <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:13px;letter-spacing:.18em;color:#fff;margin-bottom:6px"><%= t("footer.site") %></div>
