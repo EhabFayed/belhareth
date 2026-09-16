@@ -1,0 +1,19 @@
+# dr-balharethclinic.com
+User-agent: *
+Allow: /
+
+# Admin dashboard, auth endpoints and the JSON API the dashboard consumes:
+# these are not pages, so keep them out of the index.
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /blogs_landing
+Disallow: /blog_show
+Disallow: /operations_landing
+Disallow: /operation_show
+Disallow: /faq_about_us
+
+# Cloudflare internal paths.
+Disallow: /cdn-cgi/
+
+Sitemap: https://dr-balharethclinic.com/sitemap.xml

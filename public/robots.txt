@@ -1,6 +1,0 @@
-# dr-balharethclinic.com
-User-agent: *
-Allow: /
-Disallow: /admin
-
-Sitemap: https://dr-balharethclinic.com/sitemap.xml

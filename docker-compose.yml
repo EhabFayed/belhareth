@@ -5,54 +5,77 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: tba_development
+      POSTGRES_DB: app_production
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7
     restart: always
-    ports:
-      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
   app:
     build: .
+    image: balhareth_image:latest
     restart: always
-    # Match the host user (uid 1001) so the bind-mounted tmp/ and log/ are writable.
-    user: "1001:1001"
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
-      DATABASE_URL: postgres://postgres:password@db:5432/tba_development
+      RAILS_ENV: production
+      DATABASE_URL: postgres://postgres:password@db:5432/app_production
       REDIS_URL: redis://redis:6379/0
-      RAILS_ENV: development
-    volumes:
-      - .:/rails
-      - storage:/rails/storage
+      RAILS_LOG_TO_STDOUT: "true"
+      RAILS_SERVE_STATIC_FILES: "true"
+      # Change to the real domain once DNS is final.
+      RAILS_HOST: balhareth.com
+      RAILS_PROTOCOL: https
+      RAILS_ASSUME_SSL: "false"
+      RAILS_FORCE_SSL: "false"
+      PORT: "9030"
+      # Secret key base for Rails production (generate with: openssl rand -hex 64)
+      SECRET_KEY_BASE: "63c185e63b2df2ec46524b8dcdfa5ce5265f14b43296ddecb0939dd5af70514eb4ae3ff6227f82678feb2b39dd3b0856acebba1b69350bc2c8399361f7216965"
     ports:
-      - "3000:3000"
-    command: ["bin/rails", "server", "-b", "0.0.0.0"]
+      - "9030:9030"  # Map host port 9030 to container port 9030
+    volumes:
+      - storage:/rails/storage
+    command: ["bash", "-c", "rm -f tmp/pids/server.pid && bin/rails server -b 0.0.0.0 -p ${PORT:-9030}"]
+    healthcheck:
+      test: ["CMD", "sh", "-c", "curl -f http://localhost:${PORT:-9030}/up || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
 
   sidekiq:
-    build: .
+    image: balhareth_image:latest
     restart: always
-    user: "1001:1001"
     depends_on:
-      - redis
-      - db
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
-      DATABASE_URL: postgres://postgres:password@db:5432/tba_development
+      RAILS_ENV: production
+      DATABASE_URL: postgres://postgres:password@db:5432/app_production
       REDIS_URL: redis://redis:6379/0
-      RAILS_ENV: development
+      RAILS_LOG_TO_STDOUT: "true"
+      SECRET_KEY_BASE: "63c185e63b2df2ec46524b8dcdfa5ce5265f14b43296ddecb0939dd5af70514eb4ae3ff6227f82678feb2b39dd3b0856acebba1b69350bc2c8399361f7216965"
     volumes:
-      - .:/rails
       - storage:/rails/storage
-    command: ["bundle", "exec", "sidekiq", "-r", "./config/environment.rb"]
+    command: ["bundle", "exec", "sidekiq"]
 
 volumes:
   postgres_data:
   storage:
-

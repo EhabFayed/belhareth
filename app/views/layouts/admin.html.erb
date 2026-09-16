@@ -6,16 +6,16 @@
   <meta name="robots" content="noindex,nofollow">
   <title><%= content_for(:title).presence || "Admin" %> · Balhareth Ortho</title>
   <%= csrf_meta_tags %>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="/favicon.ico" sizes="32x32">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" href="<%= static_asset("/favicon.svg") %>" type="image/svg+xml">
+  <link rel="icon" href="<%= static_asset("/favicon.ico") %>" sizes="32x32">
+  <link rel="apple-touch-icon" href="<%= static_asset("/apple-touch-icon.png") %>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/vendor/quill.snow.css">
-  <link rel="stylesheet" href="/admin.css">
+  <link rel="stylesheet" href="<%= static_asset("/admin.css") %>">
   <script src="/vendor/quill.js" defer></script>
-  <script src="/admin.js" defer></script>
+  <script src="<%= static_asset("/admin.js") %>" defer></script>
 </head>
 <body>
 <% if current_admin %>
