@@ -86,6 +86,30 @@
     setTimeout(function () { el.classList.remove('show'); }, 6500);
   }
 
+  // Articles: category chips filter the cards in place (no URL change, so a
+  // category is never a separate page).
+  function articleFilters() {
+    var bar = document.getElementById('article-filters'), grid = document.getElementById('article-grid');
+    if (!bar || !grid) return;
+    var chips = bar.querySelectorAll('[data-filter]'), empty = document.getElementById('article-filter-empty');
+    bar.addEventListener('click', function (e) {
+      var chip = e.target.closest('[data-filter]');
+      if (!chip) return;
+      var cat = chip.getAttribute('data-filter'), shown = 0;
+      Array.prototype.forEach.call(chips, function (c) {
+        var on = c === chip;
+        c.classList.toggle('chip-on', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      Array.prototype.forEach.call(grid.querySelectorAll('[data-category]'), function (card) {
+        var hit = cat === 'all' || card.getAttribute('data-category') === cat;
+        card.hidden = !hit;
+        if (hit) shown++;
+      });
+      if (empty) empty.hidden = shown > 0;
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     splash();
     heroWord();
@@ -93,5 +117,6 @@
     reveals();
     navShadow();
     toast();
+    articleFilters();
   });
 })();
