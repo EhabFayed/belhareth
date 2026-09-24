@@ -8,16 +8,16 @@
     <p style="margin:24px 0 0;max-width:560px;font-size:16px;line-height:1.7;color:rgba(22,40,58,.65);animation:fadeUp .7s .4s ease both"><%= t("articles.intro") %></p>
   </div>
   <div class="sec-pad" style="padding:0 48px 88px">
-    <div style="display:flex;gap:10px;margin-bottom:32px;font-size:12.5px;letter-spacing:.1em;flex-wrap:wrap">
-      <a href="<%= articles_path %>" class="chip <%= 'chip-on' unless @category %>"><%= t("articles.all") %></a>
+    <div id="article-filters" role="group" aria-label="<%= t("articles.filter_label") %>" style="display:flex;gap:10px;margin-bottom:32px;font-size:12.5px;letter-spacing:.1em;flex-wrap:wrap">
+      <button type="button" class="chip chip-on" data-filter="all" aria-pressed="true"><%= t("articles.all") %></button>
       <% ArticlesController::CATEGORIES.each do |cat| %>
-        <a href="<%= articles_path(category: cat) %>" class="chip <%= 'chip-on' if @category == cat %>"><%= t("articles.categories.#{cat}") %></a>
+        <button type="button" class="chip" data-filter="<%= cat %>" aria-pressed="false"><%= t("articles.categories.#{cat}") %></button>
       <% end %>
     </div>
     <% if @blogs.any? %>
-    <div class="rv-kids m2" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+    <div id="article-grid" class="rv-kids m2" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
       <% @blogs.each do |blog| %>
-      <a href="<%= article_path(loc_slug(blog)) %>" class="card-line" style="border:1px solid rgba(22,40,58,.1);border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);display:block;transition:border-color .3s,transform .3s">
+      <a href="<%= article_path(loc_slug(blog)) %>" class="card-line" data-category="<%= blog.category %>" style="border:1px solid rgba(22,40,58,.1);border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);display:block;transition:border-color .3s,transform .3s">
         <% if (photo_url = blog_photo_url(blog)) %>
           <div style="height:170px"><img class="slot" src="<%= photo_url %>" alt="<%= blog_photo_alt(blog) %>" style="height:170px;border-radius:0"></div>
         <% end %>
@@ -30,6 +30,9 @@
         </div>
       </a>
       <% end %>
+    </div>
+    <div id="article-filter-empty" hidden style="border:1px dashed rgba(22,40,58,.25);border-radius:18px;padding:60px 40px;text-align:center;color:rgba(22,40,58,.55);font-size:15px">
+      <%= t("articles.empty_html", contact: contact_path) %>
     </div>
     <% else %>
     <div style="border:1px dashed rgba(22,40,58,.25);border-radius:18px;padding:60px 40px;text-align:center;color:rgba(22,40,58,.55);font-size:15px">

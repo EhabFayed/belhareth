@@ -297,9 +297,16 @@ class SitePagesTest < ActionDispatch::IntegrationTest
     get root_path
     assert_includes response.body, %(<link rel="canonical" href="http://www.example.com/">)
 
-    # filtered listing canonicalizes to the clean path
+    # categories are filtered client-side on the one listing page; legacy
+    # ?category= links 301 to the clean path so they never index separately
     get "/articles?category=knee"
+    assert_response :moved_permanently
+    assert_equal "http://www.example.com/articles", response.location
+    get "/articles"
     assert_includes response.body, %(<link rel="canonical" href="http://www.example.com/articles">)
+    assert_includes response.body, 'data-filter="knee"'
+    assert_includes response.body, 'data-category="knee"'
+    assert_not_includes response.body, "articles?category="
 
     # wrong-locale slug 301s to the locale-correct slug
     get "/ar/specialties/#{@operation.slug}"

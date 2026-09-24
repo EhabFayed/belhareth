@@ -104,7 +104,8 @@ details.faq-d:hover{border-color:rgba(18,115,191,.4)!important;box-shadow:0 6px 
 .rich * { white-space: normal; max-width: 100%; }
 
 /* article category chips */
-.chip { padding: 9px 20px; border-radius: 999px; border: 1px solid rgba(22,40,58,.2); color: rgba(22,40,58,.7); transition: border-color .3s, color .3s; }
+.chip { padding: 9px 20px; border-radius: 999px; border: 1px solid rgba(22,40,58,.2); color: rgba(22,40,58,.7); transition: border-color .3s, color .3s; background: none; font: inherit; letter-spacing: inherit; cursor: pointer; }
+#article-grid > [hidden] { display: none !important; }
 .chip:hover { border-color: #1273BF; color: #1273BF; }
 .chip-on { background: #1273BF; border-color: #1273BF; color: #fff; }
 .chip-on:hover { color: #fff; }

@@ -3,10 +3,15 @@ class ArticlesController < ApplicationController
   # recovery articles live under their specialty).
   CATEGORIES = %w[knee hip trauma complex].freeze
 
+  # The category chips filter client-side on the one /articles page, so a
+  # category never becomes its own URL. Legacy ?category= links 301 to the
+  # clean path so search engines fold them into the single listing.
   def index
-    @category = CATEGORIES.include?(params[:category]) ? params[:category] : nil
+    if params.key?(:category)
+      redirect_to articles_path, status: :moved_permanently and return
+    end
+
     @blogs = Blog.published
-    @blogs = @blogs.where(category: Blog.category.find_value(@category).value) if @category
   end
 
   def show

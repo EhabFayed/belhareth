@@ -175,6 +175,7 @@ en:
     heading_html: "Understand<br>before you <span style=\"color:#1273BF\">decide</span>"
     intro: "Plain-language guides and videos on joint pain, surgery, and recovery — written to answer what patients actually search for."
     all: "ALL"
+    filter_label: "Filter articles by category"
     empty_html: "New articles are on the way — follow the clinic on social media, or <a href=\"%{contact}\" class=\"link-blue\" style=\"color:#1273BF\">ask us directly</a>."
     by: "DR. MOHAMMED ALI BALHARETH"
     related_label: "COMMON QUESTIONS"
