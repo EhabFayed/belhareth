@@ -306,6 +306,7 @@ class SitePagesTest < ActionDispatch::IntegrationTest
     assert_includes response.body, %(<link rel="canonical" href="http://www.example.com/articles">)
     assert_includes response.body, 'data-filter="knee"'
     assert_includes response.body, 'data-category="knee"'
+    assert_includes response.body, 'id="article-more"'
     assert_not_includes response.body, "articles?category="
 
     # wrong-locale slug 301s to the locale-correct slug

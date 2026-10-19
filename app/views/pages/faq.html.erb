@@ -8,22 +8,22 @@
     <p style="margin:24px 0 0;max-width:560px;font-size:16px;line-height:1.7;color:rgba(22,40,58,.65);animation:fadeUp .7s .4s ease both"><%= t("faq_page.intro") %></p>
   </div>
 
-  <div class="rv m1 sec-pad" style="padding:0 48px 80px;display:grid;grid-template-columns:minmax(0,.4fr) minmax(0,.6fr);gap:56px">
-    <div>
-      <div style="font-size:12px;letter-spacing:.24em;color:#1273BF;margin-bottom:18px"><%= t("faq_page.group_label") %></div>
-      <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(28px,3.2vw,40px);line-height:1.1;text-transform:uppercase"><%= t("faq_page.group_heading_html") %></h2>
-      <p style="margin:22px 0 0;font-size:14.5px;line-height:1.7;color:rgba(22,40,58,.6)"><%= t("faq_page.group_note") %></p>
+  <div class="rv sec-pad" style="padding:0 48px 80px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px 40px;flex-wrap:wrap;margin-bottom:24px">
+      <div style="font-size:12px;letter-spacing:.24em;color:#1273BF"><%= t("faq_page.group_label") %></div>
+      <p style="margin:0;font-size:14.5px;line-height:1.7;color:rgba(22,40,58,.6)"><%= t("faq_page.group_note") %></p>
     </div>
-    <div style="display:flex;flex-direction:column;gap:14px">
+    <% if @faqs.any? %>
+    <div class="m1" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start">
       <% @faqs.each do |faq| %>
         <%= render "shared/faq_item", q: loc(faq, :question), a: loc(faq, :answer) %>
       <% end %>
-      <% if @faqs.empty? %>
-        <div style="border:1px dashed rgba(22,40,58,.25);border-radius:18px;padding:48px 40px;text-align:center;color:rgba(22,40,58,.55);font-size:15px">
-          <%= t("faq_page.empty_html", wa: ApplicationHelper::CLINIC_WHATSAPP_URL) %>
-        </div>
-      <% end %>
     </div>
+    <% else %>
+    <div style="border:1px dashed rgba(22,40,58,.25);border-radius:18px;padding:48px 40px;text-align:center;color:rgba(22,40,58,.55);font-size:15px">
+      <%= t("faq_page.empty_html", wa: ApplicationHelper::CLINIC_WHATSAPP_URL) %>
+    </div>
+    <% end %>
   </div>
 
   <%= render "shared/cta_band", headline_html: t("faq_page.cta_html"), whatsapp: true %>

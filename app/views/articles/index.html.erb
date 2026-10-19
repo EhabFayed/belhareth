@@ -15,7 +15,7 @@
       <% end %>
     </div>
     <% if @blogs.any? %>
-    <div id="article-grid" class="rv-kids m2" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+    <div id="article-grid" class="rv-kids m2" data-page-size="9" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
       <% @blogs.each do |blog| %>
       <a href="<%= article_path(loc_slug(blog)) %>" class="card-line" data-category="<%= blog.category %>" style="border:1px solid rgba(22,40,58,.1);border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);display:block;transition:border-color .3s,transform .3s">
         <% if (photo_url = blog_photo_url(blog)) %>
@@ -30,6 +30,9 @@
         </div>
       </a>
       <% end %>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:36px">
+      <button type="button" id="article-more" class="chip" hidden style="font-size:12.5px;letter-spacing:.1em;padding:14px 32px"><%= t("articles.load_more") %></button>
     </div>
     <div id="article-filter-empty" hidden style="border:1px dashed rgba(22,40,58,.25);border-radius:18px;padding:60px 40px;text-align:center;color:rgba(22,40,58,.55);font-size:15px">
       <%= t("articles.empty_html", contact: contact_path) %>
