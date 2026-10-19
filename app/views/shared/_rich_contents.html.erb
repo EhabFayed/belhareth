@@ -2,10 +2,14 @@
     each block shows its text, then its photos (2-up grid when several),
     same structure the elmunifi blog pages use. Photo alt text is kept on the
     <img> for SEO/accessibility only — it is not shown as a visible caption. %>
+<%# padded (bool, default true) — false drops the section gutters and the
+    980px cap so the blocks fill a column the caller lays out (specialty
+    pages put the booking form beside them). %>
+<% padded = local_assigns.fetch(:padded, true) %>
 <% contents.each do |content| %>
   <% photos = content.content_photos.select { |cp| cp.photo.attached? } %>
-  <div class="rv sec-pad" style="padding:0 48px 56px">
-    <div class="rich" style="border:1px solid rgba(22,40,58,.1);border-radius:18px;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);padding:40px 44px;max-width:980px">
+  <div class="rv<%= ' sec-pad' if padded %>" style="padding:<%= padded ? '0 48px 56px' : '0 0 24px' %>">
+    <div class="rich" style="border:1px solid rgba(22,40,58,.1);border-radius:18px;background:#fff;box-shadow:0 2px 10px rgba(22,40,58,.04);padding:40px 44px;<%= 'max-width:980px' if padded %>">
       <%= rich(loc(content, :content)) %>
       <% if photos.any? %>
         <div class="m1" style="display:grid;grid-template-columns:<%= photos.size > 1 ? '1fr 1fr' : '1fr' %>;gap:16px;margin-top:24px">

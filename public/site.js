@@ -87,27 +87,40 @@
   }
 
   // Articles: category chips filter the cards in place (no URL change, so a
-  // category is never a separate page).
+  // category is never a separate page) and "load more" reveals the matching
+  // cards a page at a time. Every card is in the HTML for crawlers.
   function articleFilters() {
     var bar = document.getElementById('article-filters'), grid = document.getElementById('article-grid');
     if (!bar || !grid) return;
-    var chips = bar.querySelectorAll('[data-filter]'), empty = document.getElementById('article-filter-empty');
+    var chips = bar.querySelectorAll('[data-filter]'),
+        empty = document.getElementById('article-filter-empty'), more = document.getElementById('article-more'),
+        pageSize = parseInt(grid.getAttribute('data-page-size'), 10) || 9, cat = 'all', limit = pageSize;
+    function apply() {
+      var matched = 0, shown = 0;
+      Array.prototype.forEach.call(grid.querySelectorAll('[data-category]'), function (card) {
+        var hit = cat === 'all' || card.getAttribute('data-category') === cat;
+        if (hit) matched++;
+        var show = hit && matched <= limit;
+        card.hidden = !show;
+        if (show) shown++;
+      });
+      if (empty) empty.hidden = shown > 0;
+      if (more) more.hidden = matched <= limit;
+    }
     bar.addEventListener('click', function (e) {
       var chip = e.target.closest('[data-filter]');
       if (!chip) return;
-      var cat = chip.getAttribute('data-filter'), shown = 0;
+      cat = chip.getAttribute('data-filter');
+      limit = pageSize;
       Array.prototype.forEach.call(chips, function (c) {
         var on = c === chip;
         c.classList.toggle('chip-on', on);
         c.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
-      Array.prototype.forEach.call(grid.querySelectorAll('[data-category]'), function (card) {
-        var hit = cat === 'all' || card.getAttribute('data-category') === cat;
-        card.hidden = !hit;
-        if (hit) shown++;
-      });
-      if (empty) empty.hidden = shown > 0;
+      apply();
     });
+    if (more) more.addEventListener('click', function () { limit += pageSize; apply(); });
+    apply();
   }
 
   document.addEventListener('DOMContentLoaded', function () {

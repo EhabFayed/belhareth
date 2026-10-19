@@ -30,14 +30,20 @@
 
   <div style="border-top:1px solid rgba(22,40,58,.12);padding-top:56px"></div>
 
-  <%= render "shared/rich_contents", contents: @operation.contents.where(is_deleted: false, is_published: true).order(:id) %>
+  <% contents = @operation.contents.where(is_deleted: false, is_published: true).order(:id) %>
+  <% if contents.any? %>
+  <div class="m1 sec-pad" style="padding:0 48px 32px;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:40px;align-items:start">
+    <div><%= render "shared/rich_contents", contents: contents, padded: false %></div>
+    <aside style="position:sticky;top:92px;padding-bottom:24px"><%= render "shared/booking_form", compact: true %></aside>
+  </div>
+  <% end %>
 
   <% faqs = @operation.faqs.where(is_deleted: false, is_published: true).order(:id) %>
   <% if faqs.any? %>
   <div class="rv m1 sec-pad" style="padding:0 48px 80px;display:grid;grid-template-columns:minmax(0,.4fr) minmax(0,.6fr);gap:56px">
     <div>
       <div style="font-size:12px;letter-spacing:.24em;color:#1273BF;margin-bottom:18px"><%= t("condition.faq_label") %></div>
-      <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:38px;line-height:1.05;text-transform:uppercase"><%= t("condition.faq_heading_html") %></h2>
+      <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:38px;line-height:1.05;text-transform:uppercase"><%= t("condition.faq_heading_html", title: loc(@operation, :title)) %></h2>
     </div>
     <div style="display:flex;flex-direction:column;gap:14px">
       <% faqs.each do |faq| %>
