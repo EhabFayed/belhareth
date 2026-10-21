@@ -72,6 +72,8 @@ details.faq-d:hover{border-color:rgba(18,115,191,.4)!important;box-shadow:0 6px 
 @media (max-width:900px){
   .m1{grid-template-columns:1fr!important}
   .sec-pad{padding-left:24px!important;padding-right:24px!important}
+  /* hero glow bleeds 44px past the image; on mobile the gutter is only 24px */
+  .hero-glow{inset:-20px!important}
   #site-nav{padding:12px 18px!important;flex-wrap:wrap}
 }
 @media (max-width:640px){
