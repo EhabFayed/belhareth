@@ -13,7 +13,7 @@
 
 <div>
   <!-- hero -->
-  <div class="sec-pad" style="position:relative;padding:80px 48px 64px;background:radial-gradient(110% 85% at 88% 0%,#E4F0F9 0%,rgba(228,240,249,0) 58%),linear-gradient(180deg,#FDFEFF 0%,#F7FAFC 100%)">
+  <div class="sec-pad" style="position:relative;overflow:clip;padding:80px 48px 64px;background:radial-gradient(110% 85% at 88% 0%,#E4F0F9 0%,rgba(228,240,249,0) 58%),linear-gradient(180deg,#FDFEFF 0%,#F7FAFC 100%)">
     <div class="m1" style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center">
       <div style="display:flex;flex-direction:column;gap:28px">
         <div style="display:flex;align-items:center;gap:12px;animation:fadeUp .7s .1s ease both"><svg width="64" height="22" viewBox="0 0 64 22" style="overflow:visible;flex:none"><path d="M0 11 H14 L19 3 L25 19 L30 11 H64" fill="none" stroke="#1273BF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="110" stroke-dashoffset="110" style="animation:ecg 2.8s linear infinite"></path></svg><span style="font-size:12px;letter-spacing:.24em;color:#1273BF"><%= t("home.eyebrow") %></span></div>
@@ -24,7 +24,7 @@
           <a href="<%= ApplicationHelper::CLINIC_WHATSAPP_URL %>" target="_blank" rel="noopener" class="btn-wa-outline" style="display:flex;align-items:center;gap:10px;padding:16px 32px;border-radius:999px;border:1.5px solid #25D366;color:#128C4B;font-size:14px;font-weight:700;letter-spacing:.06em;transition:background .3s,color .3s"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.4 2 11.8c0 1.9.6 3.8 1.6 5.4L2 22l4.9-1.5c1.5.9 3.3 1.3 5.1 1.3 5.5 0 10-4.4 10-9.9S17.5 2 12 2z"></path></svg><%= t("common.whatsapp_us") %></a>
         </div>
       </div>
-      <div style="position:relative;animation:fadeIn 1s .3s ease both"><div style="position:absolute;inset:-44px;background:radial-gradient(60% 60% at 50% 50%,rgba(18,115,191,.14),transparent 70%);pointer-events:none;animation:floatY 7s ease-in-out infinite"></div>
+      <div style="position:relative;animation:fadeIn 1s .3s ease both"><div class="hero-glow" style="position:absolute;inset:-44px;background:radial-gradient(60% 60% at 50% 50%,rgba(18,115,191,.14),transparent 70%);pointer-events:none;animation:floatY 7s ease-in-out infinite"></div>
         <div class="hero-photo" style="width:100%;height:720px"><img class="slot" src="<%= static_asset("/images/hero.webp") %>" alt="Dr. Mohammed Ali Balhareth — consultant orthopedic surgeon" style="border-radius:18px"></div>
         <div style="position:absolute;left:18px;bottom:18px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-radius:16px;box-shadow:0 12px 32px rgba(22,40,58,.16);padding:14px 20px;display:flex;align-items:center;gap:12px">
           <span style="width:38px;height:38px;border-radius:12px;background:#E4F0F9;display:flex;align-items:center;justify-content:center;flex:none"><svg width="22" height="14" viewBox="0 0 64 22"><path d="M2 11 H14 L19 3 L25 19 L30 11 H62" fill="none" stroke="#1273BF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
