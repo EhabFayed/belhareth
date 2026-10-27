@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /cdn-cgi/
+
+Sitemap: https://dr-balharethclinic.com/sitemap.xml

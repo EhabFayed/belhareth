@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # robots.txt + sitemap.xml are the hand-maintained files in config/seo/,
+  # served verbatim with a one-hour cache (not from public/, whose files get a
+  # one-year cache header).
   get "sitemap.xml", to: "sitemaps#show", defaults: { format: :xml }
   get "robots.txt",  to: "robots#show",   defaults: { format: :text }
 
