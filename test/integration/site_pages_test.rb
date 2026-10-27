@@ -322,10 +322,25 @@ class SitePagesTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "/rails/active_storage/blobs/proxy/"
     assert_not_includes response.body, "/rails/active_storage/blobs/redirect/"
 
+    # sitemap.xml and robots.txt are the hand-maintained files in config/seo/,
+    # served verbatim with a one-hour public cache (Oct 2026)
     get "/sitemap.xml"
     assert_response :success
-    assert_includes response.body, "/specialties/#{@operation.slug}</loc>"
-    assert_includes response.body, 'hreflang="ar"'
+    assert_equal "application/xml", response.media_type
+    assert_includes response.headers["Cache-Control"], "max-age=3600"
+    assert_equal Rails.root.join("config/seo/sitemap.xml").read, response.body
+    assert_includes response.body, "<loc>https://dr-balharethclinic.com/</loc>"
+    locs = Nokogiri::XML(response.body) { |c| c.strict }.css("url loc").map(&:text)
+    assert locs.any?
+    assert locs.all? { |l| l.start_with?("https://dr-balharethclinic.com/") }
+    assert_equal locs.uniq.size, locs.size
+
+    get "/robots.txt"
+    assert_response :success
+    assert_equal "text/plain", response.media_type
+    assert_includes response.headers["Cache-Control"], "max-age=3600"
+    assert_equal Rails.root.join("config/seo/robots.txt").read, response.body
+    assert_includes response.body, "Sitemap: https://dr-balharethclinic.com/sitemap.xml"
   end
 
   test "admin requires login and works with a session" do
