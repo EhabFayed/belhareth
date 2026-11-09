@@ -317,6 +317,16 @@ class SitePagesTest < ActionDispatch::IntegrationTest
     assert_response :moved_permanently
     assert_includes response.location, "/specialties/#{@operation.slug}"
 
+    # language switch points at the other language's real slug (200, not a 301)
+    get "/articles/#{@blog.slug}"
+    assert_includes response.body, %(href="/ar/articles/#{ERB::Util.url_encode(@blog.slug_ar)}" class="lang-switch")
+    get "/ar/articles/#{ERB::Util.url_encode(@blog.slug_ar)}"
+    assert_includes response.body, %(href="/articles/#{@blog.slug}" class="lang-switch")
+    get "/ar/specialties/#{ERB::Util.url_encode(@operation.slug_ar)}"
+    assert_includes response.body, %(href="/specialties/#{@operation.slug}" class="lang-switch")
+    get "/ar/faq"
+    assert_includes response.body, %(href="/faq" class="lang-switch")
+
     # article images serve via proxy, not redirect
     get "/articles/#{@blog.slug}"
     assert_includes response.body, "/rails/active_storage/blobs/proxy/"
