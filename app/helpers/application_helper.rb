@@ -42,9 +42,16 @@ module ApplicationHelper
     rtl? ? (record.slug_ar.presence || record.slug) : record.slug
   end
 
-  # Same page in the other language.
+  # Same page in the other language. Slug pages (articles, specialties)
+  # declare their locale-correct alternates for hreflang; reuse those so the
+  # switch lands on the real slug with a 200 instead of a wrong-slug 301.
   def locale_switch_path
     other = rtl? ? nil : :ar
+    key = other ? :alternate_ar : :alternate_en
+    if content_for?(key)
+      uri = URI.parse(content_for(key).to_s) rescue nil
+      return uri.path if uri && uri.path.present?
+    end
     url_for(request.query_parameters.merge(locale: other, only_path: true))
   rescue ActionController::UrlGenerationError
     other ? "/#{other}" : "/"
